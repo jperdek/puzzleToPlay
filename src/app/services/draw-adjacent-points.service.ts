@@ -38,20 +38,40 @@ export class DrawAdjacentPointsService {
     ctx.putImageData(image, 0, 0);
   }
 
-  public createConnections(imageData: ImageData, context: CanvasRenderingContext2D, polygon: Polygon, bufferedWidth: number, radius: number): void {
+  public createConnections(
+    imageData: ImageData,
+    context: CanvasRenderingContext2D,
+    polygon: Polygon,
+    bufferedWidth: number,
+    radius: number): void {
     let next;
-    for(let i = 0; i<polygon.points.length; i++){
+    let smallX;
+    let smallY;
+
+    console.log(polygon.points);
+    for (let i = 0; i < polygon.points.length; i++){
       if (i + 1 === polygon.points.length) {
         next = 0;
       } else {
         next = i + 1;
       }
-      const middleX = Math.abs(polygon.points[i].x + (polygon.points[next].x - polygon.points[i].x) / 2.0); 
-      const middleY = Math.abs(polygon.points[i].y + (polygon.points[next].y - polygon.points[i].y) / 2.0);
-   
-      if(polygon.connections[i] === Connection.hole) {
-        this.drawInnerCircle(imageData, middleX, middleY, bufferedWidth, radius);
+      if (polygon.points[i].x > polygon.points[next].x) {
+        smallX = polygon.points[next].x;
       } else {
+        smallX = polygon.points[i].x;
+      }
+
+      if( polygon.points[i].y > polygon.points[next].y) {
+        smallY = polygon.points[next].y;
+      } else {
+        smallY = polygon.points[i].y;
+      }
+      const middleX = Math.ceil(smallX + Math.abs((polygon.points[next].x - polygon.points[i].x) / 2.0));
+      const middleY = Math.ceil(smallY + Math.abs((polygon.points[next].y - polygon.points[i].y) / 2.0));
+
+      if (polygon.connections[i] === Connection.hole) {
+        this.drawInnerCircle(imageData, middleX, middleY, bufferedWidth, radius);
+      } else if (polygon.connections[i] === Connection.fill) {
         polygon.innerCircles.push(this.saveInnerCircle(imageData, context, middleX, middleY, bufferedWidth, radius))
       }
     }
@@ -60,16 +80,30 @@ export class DrawAdjacentPointsService {
   public redrawInnerCircles(imageData: ImageData, polygon: Polygon, bufferedWidth: number, radius: number): void {
     let next;
     let saved = 0;
-    for(let i = 0; i<polygon.points.length; i++){
+    let smallX;
+    let smallY;
+
+    for(let i = 0; i < polygon.points.length; i++){
       if (i + 1 === polygon.points.length) {
         next = 0;
       } else {
         next = i + 1;
       }
-      const middleX = Math.abs(polygon.points[i].x + (polygon.points[next].x - polygon.points[i].x) / 2.0); 
-      const middleY = Math.abs(polygon.points[i].y + (polygon.points[next].y - polygon.points[i].y) / 2.0);
-   
-      if(polygon.connections[i] !== Connection.hole) {
+      if (polygon.points[i].x > polygon.points[next].x) {
+        smallX = polygon.points[next].x;
+      } else {
+        smallX = polygon.points[i].x;
+      }
+
+      if( polygon.points[i].y > polygon.points[next].y) {
+        smallY = polygon.points[next].y;
+      } else {
+        smallY = polygon.points[i].y;
+      }
+      const middleX = Math.ceil(smallX + Math.abs((polygon.points[next].x - polygon.points[i].x) / 2.0));
+      const middleY = Math.ceil(smallY + Math.abs((polygon.points[next].y - polygon.points[i].y) / 2.0));
+
+      if (polygon.connections[i] === Connection.fill) {
         this.pasteInnerCircle(imageData, polygon.innerCircles[saved++], middleX, middleY, bufferedWidth, radius);
       }
     }
@@ -93,9 +127,9 @@ export class DrawAdjacentPointsService {
         const adjustedY = positionY  + y;
 
         const index = (adjustedX + (adjustedY * bufferedWidth)) * pixelWidth;
-        // imageData.data[index] = imageData.data[index];
-        // imageData.data[index + 1] = imageData.data[index + 1];
-        // imageData.data[index + 2] = imageData.data[index + 2];
+        imageData.data[index] = imageData.data[index];
+        imageData.data[index + 1] = imageData.data[index + 1];
+        imageData.data[index + 2] = imageData.data[index + 2];
         imageData.data[index + 3] = 0;
       }
     }

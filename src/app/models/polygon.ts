@@ -2,7 +2,8 @@ import { Point } from './point';
 
 export enum Connection {
     hole,
-    fill
+    fill,
+    none
 }
 
 export interface Polygon {

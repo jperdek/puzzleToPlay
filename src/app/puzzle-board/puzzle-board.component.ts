@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { fabric } from 'fabric';
 import { Connection } from '../models/polygon';
+import { PuzzleGeneratorQuadroService } from '../puzzle-generator-quadro.service';
 import { DrawBordersService } from '../services/draw-borders.service';
 
 @Component({
@@ -10,7 +11,9 @@ import { DrawBordersService } from '../services/draw-borders.service';
 })
 export class PuzzleBoardComponent implements OnInit {
   fabricCanvas?: fabric.Canvas;
-  constructor(private drawBordersService: DrawBordersService) {}
+  constructor(
+    private drawBordersService: DrawBordersService,
+    private puzzleGeneratorQuadroService: PuzzleGeneratorQuadroService) {}
 
   ngOnInit(): void {}
 
@@ -22,16 +25,15 @@ export class PuzzleBoardComponent implements OnInit {
     });
     this.fabricCanvas.setZoom(1);
 
-    //this.setBackgroundImagee(this.fabricCanvas, '/assets/test1.jpg');
-  
+    // this.setBackgroundImagee(this.fabricCanvas, '/assets/test1.jpg');
+
     this.createHTMLCanvasImage();
-    
   }
 
   public createNativeFabricImage(): void {
     fabric.Image.fromURL('/assets/test1.jpg', (img: fabric.Image) => {
-      //img.scaleToWidth(250);
-      img.scaleToHeight(500);
+      // img.scaleToWidth(250);
+      // img.scaleToHeight(500);
       this.fabricCanvas?.add(img);
       this.fabricCanvas?.renderAll();
       if(img.width !== undefined && img.scaleX !== undefined && img.height !== undefined && img.scaleY !== undefined) {
@@ -41,16 +43,19 @@ export class PuzzleBoardComponent implements OnInit {
   }
 
   private createHTMLCanvasImage(): void {
-    var canvas = document.getElementById('supportCanvas') as HTMLCanvasElement;
+    const canvas = document.getElementById('supportCanvas') as HTMLCanvasElement;
     const context = canvas.getContext('2d');
 
-    const base_image = new Image();
-    base_image.src = 'assets/test1.jpg';
-    base_image.onload = () => {
+    const baseImage = new Image();
+    baseImage.src = 'assets/test1.jpg';
+    baseImage.onload = () => {
       if (context !== null) {
-        context.drawImage(base_image, 0, 0);
+        context.drawImage(baseImage, 0, 0);
       }
-      this.processImageHTMLCanvas(canvas,500, 756);
+       //this.processImageHTMLCanvas(canvas, 500, 756);
+      if (this.fabricCanvas !== undefined) {
+       this.puzzleGeneratorQuadroService.divideToPuzzle(canvas, this.fabricCanvas, 500, 756);
+      }
     }
   }
 
@@ -81,9 +86,7 @@ export class PuzzleBoardComponent implements OnInit {
       this.drawBordersService.drawBorders(
         this.fabricCanvas,
         imageData,
-        width,
-        height,
-        polygon
+        polygon,
       );
     } else {
       console.log('Error: undefined canvas');
@@ -93,11 +96,7 @@ export class PuzzleBoardComponent implements OnInit {
 
   public processImageHTMLCanvas(canvas: HTMLCanvasElement, width: number, height: number): void {
     const context = canvas.getContext('2d');
-    if(context !== null && this.fabricCanvas !== undefined) {
-        //const width = this.fabricCanvas.getWidth();
-        //const height = this.fabricCanvas.getHeight();
-        console.log(width);
-        console.log(height);
+    if (context !== null && this.fabricCanvas !== undefined) {
         const imageData = context.getImageData(0, 0, width, height);
         const polygon = {
           points: [
@@ -118,9 +117,7 @@ export class PuzzleBoardComponent implements OnInit {
         this.drawBordersService.drawBorders(
           this.fabricCanvas,
           imageData,
-          width,
-          height,
-          polygon
+          polygon,
         );
     } else {
       console.log('Error: undefined canvas');
