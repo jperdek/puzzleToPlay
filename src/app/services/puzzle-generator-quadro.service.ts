@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Point } from './models/point';
-import { Connection, Polygon } from './models/polygon';
-import { DrawBordersService } from './services/draw-borders.service';
+import { DrawBordersService } from './draw-borders.service';
+import { Point } from '../models/point';
+import { Connection, Polygon } from '../models/polygon';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,20 @@ export class PuzzleGeneratorQuadroService {
   constructor(private drawBordersService: DrawBordersService) { }
 
 
-  public divideToPuzzle(sourceCanvas: HTMLCanvasElement, targetCanvas: fabric.Canvas, width: number, height: number): void {
+  public divideToPuzzle(
+    sourceCanvas: HTMLCanvasElement,
+    targetCanvas: fabric.Canvas,
+    photoCanvasWidth: number,
+    photoCanvasHeight: number,
+    boardCanvasWidth: number,
+    boardCanvasHeight: number,
+    radius: number): void {
     const context = sourceCanvas.getContext('2d');
     if (context !== null && targetCanvas !== undefined) {
-      const pointMap = this.createPointMap(width, height);
+      const pointMap = this.createPointMap(photoCanvasWidth, photoCanvasHeight);
       const polygons = this.createPolygonsFromPointMap(pointMap, context);
-      polygons.forEach(polygon => this.processPolygon(polygon, width, height, targetCanvas, context));
+      polygons.forEach(polygon => this.processPolygon(polygon, photoCanvasWidth, photoCanvasHeight, targetCanvas,
+        context, radius, boardCanvasWidth, boardCanvasHeight));
     } else {
       console.log('Error: context is null or one of canvases not exists');
     }
@@ -33,7 +41,9 @@ export class PuzzleGeneratorQuadroService {
     width: number, height: number,
     targetCanvas: fabric.Canvas,
     sourceContext: CanvasRenderingContext2D,
-    radius = 20): void {
+    radius = 20,
+    boardCanvasWidth: number,
+    boardCanvasHeight: number): void {
     let minX = width;
     let minY = height;
     let maxX = 0;
@@ -47,7 +57,8 @@ export class PuzzleGeneratorQuadroService {
 
     const newWidth = maxX - minX;
     const newHeight = maxY - minY;
-    const imageData = sourceContext.getImageData(minX - radius, minY - radius, newWidth + 2*radius, newHeight + 2*radius);
+    const imageData = sourceContext.getImageData(minX - radius, minY - radius,
+                                                 newWidth + 2 * radius, newHeight + 2 * radius);
 
     polygon.points.forEach(point => {
       point.x = radius + point.x - minX;
@@ -58,6 +69,9 @@ export class PuzzleGeneratorQuadroService {
       targetCanvas,
       imageData,
       polygon,
+      radius,
+      boardCanvasWidth, boardCanvasHeight,
+      width, height,
     );
   }
 

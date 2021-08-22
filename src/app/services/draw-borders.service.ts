@@ -11,39 +11,55 @@ export class DrawBordersService {
 
   constructor(private drawAdjacentPointService: DrawAdjacentPointsService) { }
 
+  private createHTMLCanvas(width: number, height: number): HTMLCanvasElement {
+    const newCanvas = document.createElement('canvas');
+    newCanvas.width = width;
+    newCanvas.height = height;
+    return newCanvas;
+  }
+
   public drawBorders(
     canvas: fabric.Canvas,
     imageData: ImageData,
     polygon: Polygon,
-    radius = 20): void {
-    const newCanvas = document.createElement('canvas');
-    newCanvas.width = 2 * radius;
-    newCanvas.height = 2 * radius;
+    radius = 20,
+    boardCanvasWidth: number, boardCanvasHeight: number,
+    imageCanvasWidth: number, imageCanvasHeight: number): void {
+
+
+    const newCanvas = this.createHTMLCanvas(2 * radius, 2 * radius);
     const context = newCanvas.getContext('2d');
+
     if (context !== null) {
+      // creates scans
       const scans = this.polygonScan(polygon, imageData.width, imageData.height, 0, 0);
 
-      //console.log(scans);
+      // draws connection points or saves them
       this.drawAdjacentPointService.createConnections(imageData, context, polygon, imageData.width, radius);
+      // hide other content then puzzle itself
       this.drawPolygonFromScans(scans, imageData, 0, imageData.height, imageData.width);
-
+      // redraws connection points - circles - from saved parts
       this.drawAdjacentPointService.redrawInnerCircles(imageData, polygon, imageData.width, radius);
-
-      //this.drawAdjacentPointService.drawInnerCircle(imageData, 20, 20, imageData.width);
-      this.putCreatedImage(imageData, imageData.width, imageData.height, canvas);
+      // create image for given puzzle
+      this.putCreatedImage(imageData, imageData.width, imageData.height, canvas,
+        boardCanvasWidth, boardCanvasHeight, imageCanvasWidth, imageCanvasHeight);
     }
   }
 
-  public putCreatedImage(imageData: ImageData, width: number, height: number, canvas: fabric.Canvas): void {
-    const newCanvas = document.createElement('canvas');
-    newCanvas.width = width;
-    newCanvas.height = height;
+  public putCreatedImage(
+    imageData: ImageData,
+    width: number, height: number,
+    canvas: fabric.Canvas,
+    boardCanvasWidth: number, boardCanvasHeight: number,
+    imageCanvasWidth: number, imageCanvasHeight: number): void {
+    const newCanvas = this.createHTMLCanvas(width, height);
     newCanvas.getContext('2d')?.putImageData(imageData, 0, 0);
 
     fabric.Image.fromURL(newCanvas.toDataURL(), (img) => {
         img.left = 0;
         img.top = 0;
-        //img.scaleToHeight(560);
+        img.scaleToWidth((width / imageCanvasWidth) * boardCanvasWidth);
+        img.scaleToHeight((height / imageCanvasHeight) * boardCanvasHeight);
         canvas.add(img);
         img.bringToFront();
     });

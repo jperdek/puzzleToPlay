@@ -1,0 +1,27 @@
+.menu-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-drawer {
+  width: 20%;
+}
+
+.mat-drawer-container {
+  position: static;
+}
+
+.menu-component-item {
+  width: auto;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.sidenav-block {
+  height: 0 !important;
+  min-height: 0 !important;
+}
+
+.menu-sidenav-container.mat-drawer-container {
+  position: static;
+  height: 100vh;
+}

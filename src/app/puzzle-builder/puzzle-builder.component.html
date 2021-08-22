@@ -1,0 +1,8 @@
+<mat-drawer-container>
+    <mat-drawer class="puzzle-chooser-drawer" [disableClose]="true" mode="side" position="end" opened>
+        <router-outlet></router-outlet>
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-puzzle-board></app-puzzle-board>
+    </mat-drawer-content>
+</mat-drawer-container>

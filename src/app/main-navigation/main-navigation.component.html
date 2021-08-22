@@ -1,0 +1,31 @@
+
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span>Puzzle to play</span>
+
+        <span class="menu-spacer"></span>
+        <div fxShow="true" fxHide.lt-md>
+            <button class="menu-component-item" color="accent" mat-icon-button id="loadImage">
+                <mat-icon>load</mat-icon>
+                <span>Load image</span>
+            </button>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container fxFlexFill class="sidenav-block" fxHide.gt-sm>
+    <mat-sidenav #sidenav>
+        <mat-nav-list>
+            <a href="/aoc" mat-list-item>
+                <mat-icon>tour</mat-icon>
+                <span>Load image</span>
+            </a>
+            <a href="/aoc" mat-list-item>
+                <mat-icon>tour</mat-icon>
+                <span>Load image</span>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+</mat-sidenav-container>
