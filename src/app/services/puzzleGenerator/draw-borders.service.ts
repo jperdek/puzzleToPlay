@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Polygon } from '../models/polygon';
 import { fabric } from 'fabric';
 import { ScanLineService } from './scan-line.service';
 import { DrawAdjacentPointsService } from './draw-adjacent-points.service';
-import { Store } from '@ngrx/store';
-import { Puzzle } from '../store/puzzles/puzzles';
+import { Polygon } from 'src/app/models/polygon';
+import { Puzzle } from 'src/app/store/puzzles/puzzles';
+
 
 
 @Injectable({
@@ -110,11 +110,13 @@ export class DrawBordersService {
       id,
       positionIndex: 0,
       puzzleImageSrc: newCanvas.toDataURL(),
+      width,
+      height,
       boardCanvasWidth,
       boardCanvasHeight,
       imageCanvasWidth,
       imageCanvasHeight,
-    }
+    };
   }
 
   public polygonScan(

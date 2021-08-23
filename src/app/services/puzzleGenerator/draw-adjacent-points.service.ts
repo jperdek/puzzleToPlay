@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Connection, Polygon } from '../models/polygon';
+import { Connection, Polygon } from 'src/app/models/polygon';
 
 @Injectable({
   providedIn: 'root'
@@ -61,7 +61,7 @@ export class DrawAdjacentPointsService {
         smallX = polygon.points[i].x;
       }
 
-      if( polygon.points[i].y > polygon.points[next].y) {
+      if (polygon.points[i].y > polygon.points[next].y) {
         smallY = polygon.points[next].y;
       } else {
         smallY = polygon.points[i].y;
@@ -72,7 +72,7 @@ export class DrawAdjacentPointsService {
       if (polygon.connections[i] === Connection.hole) {
         this.drawInnerCircle(imageData, middleX, middleY, bufferedWidth, radius);
       } else if (polygon.connections[i] === Connection.fill) {
-        polygon.innerCircles.push(this.saveInnerCircle(imageData, context, middleX, middleY, bufferedWidth, radius))
+        polygon.innerCircles.push(this.saveInnerCircle(imageData, context, middleX, middleY, bufferedWidth, radius));
       }
     }
   }
@@ -83,7 +83,7 @@ export class DrawAdjacentPointsService {
     let smallX;
     let smallY;
 
-    for(let i = 0; i < polygon.points.length; i++){
+    for (let i = 0; i < polygon.points.length; i++){
       if (i + 1 === polygon.points.length) {
         next = 0;
       } else {
@@ -95,7 +95,7 @@ export class DrawAdjacentPointsService {
         smallX = polygon.points[i].x;
       }
 
-      if( polygon.points[i].y > polygon.points[next].y) {
+      if (polygon.points[i].y > polygon.points[next].y) {
         smallY = polygon.points[next].y;
       } else {
         smallY = polygon.points[i].y;

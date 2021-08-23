@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { PuzzleManagerService } from '../../../services/puzzle-manager.service';
+import { PuzzleManagerService } from 'src/app/services/puzzleGenerator/puzzle-manager.service';
+
 
 @Component({
   selector: 'app-puzzle-board',

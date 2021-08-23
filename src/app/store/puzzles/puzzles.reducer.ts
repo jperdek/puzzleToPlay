@@ -23,13 +23,13 @@ export const reducer = createReducer(
   on(puzzleActions.addPuzzle,
     (state, action) => adapter.upsertOne(action.puzzle, state)
   ),
-  on(puzzleActions.deleteCanvasEntity,
+  on(puzzleActions.returnPuzzle,
     (state, action) => adapter.removeOne(action.id, state)
   ),
-  on(puzzleActions.deleteGivenPuzzles,
+  on(puzzleActions.returnGivenPuzzles,
     (state, action) => adapter.removeMany(action.ids, state)
   ),
-  on(puzzleActions.deletePuzzles,
+  on(puzzleActions.returnPuzzles,
     (state, action) => adapter.removeAll(state)
   ),
   on(puzzleActions.addPuzzles,

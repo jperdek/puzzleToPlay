@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { PuzzleManagerService } from 'src/app/services/puzzleGenerator/puzzle-manager.service';
 import { PuzzleAppState, puzzleListForSelect } from 'src/app/store';
 import { Puzzle } from 'src/app/store/puzzles/puzzles';
 import * as puzzleState from 'src/app/store/puzzles/puzzles.reducer';
@@ -10,14 +11,17 @@ import * as puzzleState from 'src/app/store/puzzles/puzzles.reducer';
   templateUrl: './puzzle-chooser.component.html',
   styleUrls: ['./puzzle-chooser.component.scss']
 })
-export class PuzzleChooserComponent implements OnInit {
+export class PuzzleChooserComponent {
 
-  constructor(private store: Store<PuzzleAppState>) { }
-
-  ngOnInit(): void {
-  }
+  constructor(
+    private store: Store<PuzzleAppState>,
+    private puzzleManager: PuzzleManagerService) { }
 
   public getPuzzles(): Observable<Puzzle[]> {
     return this.store.pipe(select(puzzleListForSelect), select(puzzleState.selectAll));
+  }
+
+  public addToBoard(puzzle: Puzzle): void {
+    this.puzzleManager.addPuzzleToBoard(puzzle);
   }
 }

@@ -3,7 +3,7 @@
 
     <div class="puzzle-list">
         <div class="puzzle-part-block">
-            <mat-card *ngFor="let puzzle of (getPuzzles() | async)" class="puzzle-to-choose">
+            <mat-card *ngFor="let puzzle of (getPuzzles() | async)" class="puzzle-to-choose" (click)="addToBoard(puzzle);">
                 <img class="puzzle-image" [src]="puzzle.puzzleImageSrc" alt="puzzle" />
                 <div class="higlighted-corner" href="#">
                     <img class="unselected-image" src="/assets/icons/select-unselected.svg" />

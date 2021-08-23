@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { DrawBordersService } from './draw-borders.service';
-import { Point } from '../models/point';
-import { Connection, Polygon } from '../models/polygon';
-import { Puzzle } from '../store/puzzles/puzzles';
+
+
 import { Store } from '@ngrx/store';
-import { PuzzleAppState } from '../store';
-import { addPuzzles } from '../store/puzzles/puzzles.actions';
+import { PuzzleAppState } from 'src/app/store';
+import { Puzzle } from 'src/app/store/puzzles/puzzles';
+import { addPuzzles } from 'src/app/store/puzzles/puzzles.actions';
+import { Connection, Polygon } from 'src/app/models/polygon';
+import { Point } from 'src/app/models/point';
 
 @Injectable({
   providedIn: 'root'
@@ -198,7 +200,7 @@ export class PuzzleGeneratorQuadroService {
          const rightBottomPoint = pointMap[i][j];
 
          this.drawScheme(sourceContext, leftBottomPoint, leftTopPoint, rightTopPoint, rightBottomPoint);
- 
+
          if (i === 1) {
           topConnection = Connection.none;
         } else if (polygons[polygons.length - pointMap[i].length + 1].connections[3] === Connection.fill) {

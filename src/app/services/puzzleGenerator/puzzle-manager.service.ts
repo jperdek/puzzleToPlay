@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
+import { Puzzle } from 'src/app/store/puzzles/puzzles';
+import { ManagePuzzleService } from './manage-puzzle.service';
 import { PuzzleGeneratorQuadroService } from './puzzle-generator-quadro.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,10 @@ export class PuzzleManagerService {
   public static readonly nativeCanvasId = 'supportCanvas';
   public static readonly fabricCanvasId = 'puzzleBoard';
 
-  constructor(private puzzleGeneratorQuadroService: PuzzleGeneratorQuadroService) { }
+  constructor(
+    private puzzleGeneratorQuadroService: PuzzleGeneratorQuadroService,
+    private managePuzzleService: ManagePuzzleService
+    ) { }
 
   public initialize(): void {
     this.createCanvas();
@@ -42,6 +48,12 @@ export class PuzzleManagerService {
       if (PuzzleManagerService.fabricCanvas !== undefined) {
        this.puzzleGeneratorQuadroService.divideToPuzzle(canvas, PuzzleManagerService.fabricCanvas, 500, 756, 900, 560, 20);
       }
-    }
+    };
   }
+
+  public addPuzzleToBoard(puzzle: Puzzle): void {
+    this.managePuzzleService.addPuzzleToBoard(puzzle, PuzzleManagerService.fabricCanvas);
+  }
+
+  public getManagePuzzleService(): ManagePuzzleService { return this.managePuzzleService; }
 }

@@ -11,18 +11,18 @@ export const addPuzzle = createAction(
   props<{ puzzle: Puzzle }>()
 );
 
-export const deleteCanvasEntity = createAction(
-  '[Puzzles] Delete Puzzles',
+export const returnPuzzle = createAction(
+  '[Puzzles] Return Puzzles',
   props<{ id: string }>()
 );
 
-export const deleteGivenPuzzles = createAction(
-  '[Puzzles] DeleteMany Puzzles',
+export const returnGivenPuzzles = createAction(
+  '[Puzzles] ReturnMany Puzzles',
   props<{ ids: string[] }>()
 );
 
-export const deletePuzzles = createAction(
-  '[Puzzles] DeleteAll Puzzles',
+export const returnPuzzles = createAction(
+  '[Puzzles] ReturnAll Puzzles',
 );
 
 export const addPuzzles = createAction(
