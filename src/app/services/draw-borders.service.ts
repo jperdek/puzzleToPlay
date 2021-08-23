@@ -3,6 +3,9 @@ import { Polygon } from '../models/polygon';
 import { fabric } from 'fabric';
 import { ScanLineService } from './scan-line.service';
 import { DrawAdjacentPointsService } from './draw-adjacent-points.service';
+import { Store } from '@ngrx/store';
+import { Puzzle } from '../store/puzzles/puzzles';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +21,7 @@ export class DrawBordersService {
     return newCanvas;
   }
 
-  public drawBorders(
+  public drawBordersAndInsertToBoard(
     canvas: fabric.Canvas,
     imageData: ImageData,
     polygon: Polygon,
@@ -46,6 +49,35 @@ export class DrawBordersService {
     }
   }
 
+  public drawBordersAndSave(
+    processId: string,
+    imageData: ImageData,
+    polygon: Polygon,
+    radius = 20,
+    boardCanvasWidth: number, boardCanvasHeight: number,
+    imageCanvasWidth: number, imageCanvasHeight: number): Puzzle | null {
+
+    const newCanvas = this.createHTMLCanvas(2 * radius, 2 * radius);
+    const context = newCanvas.getContext('2d');
+
+    if (context !== null) {
+      // creates scans
+      const scans = this.polygonScan(polygon, imageData.width, imageData.height, 0, 0);
+
+      // draws connection points or saves them
+      this.drawAdjacentPointService.createConnections(imageData, context, polygon, imageData.width, radius);
+      // hide other content then puzzle itself
+      this.drawPolygonFromScans(scans, imageData, 0, imageData.height, imageData.width);
+      // redraws connection points - circles - from saved parts
+      this.drawAdjacentPointService.redrawInnerCircles(imageData, polygon, imageData.width, radius);
+      // create image for given puzzle
+      return this.prepareImage(processId, imageData, imageData.width, imageData.height,
+        boardCanvasWidth, boardCanvasHeight, imageCanvasWidth, imageCanvasHeight);
+    }
+
+    return null;
+  }
+
   public putCreatedImage(
     imageData: ImageData,
     width: number, height: number,
@@ -63,6 +95,26 @@ export class DrawBordersService {
         canvas.add(img);
         img.bringToFront();
     });
+  }
+
+  public prepareImage(
+    id: string,
+    imageData: ImageData,
+    width: number, height: number,
+    boardCanvasWidth: number, boardCanvasHeight: number,
+    imageCanvasWidth: number, imageCanvasHeight: number): Puzzle {
+    const newCanvas = this.createHTMLCanvas(width, height);
+    newCanvas.getContext('2d')?.putImageData(imageData, 0, 0);
+
+    return {
+      id,
+      positionIndex: 0,
+      puzzleImageSrc: newCanvas.toDataURL(),
+      boardCanvasWidth,
+      boardCanvasHeight,
+      imageCanvasWidth,
+      imageCanvasHeight,
+    }
   }
 
   public polygonScan(

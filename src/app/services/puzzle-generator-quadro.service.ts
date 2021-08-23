@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { DrawBordersService } from './draw-borders.service';
 import { Point } from '../models/point';
 import { Connection, Polygon } from '../models/polygon';
+import { Puzzle } from '../store/puzzles/puzzles';
+import { Store } from '@ngrx/store';
+import { PuzzleAppState } from '../store';
+import { addPuzzles } from '../store/puzzles/puzzles.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +18,13 @@ export class PuzzleGeneratorQuadroService {
   maxPointRangeRow = 25;
   fillProbability = 0.5;
 
-  constructor(private drawBordersService: DrawBordersService) { }
+  constructor(
+    private drawBordersService: DrawBordersService,
+    private store: Store<PuzzleAppState>) { }
 
 
-  public divideToPuzzle(
+  // previous method without involvement of ngrx
+  public divideToPuzzleWithInsertionToBoard(
     sourceCanvas: HTMLCanvasElement,
     targetCanvas: fabric.Canvas,
     photoCanvasWidth: number,
@@ -25,6 +32,7 @@ export class PuzzleGeneratorQuadroService {
     boardCanvasWidth: number,
     boardCanvasHeight: number,
     radius: number): void {
+
     const context = sourceCanvas.getContext('2d');
     if (context !== null && targetCanvas !== undefined) {
       const pointMap = this.createPointMap(photoCanvasWidth, photoCanvasHeight);
@@ -34,6 +42,41 @@ export class PuzzleGeneratorQuadroService {
     } else {
       console.log('Error: context is null or one of canvases not exists');
     }
+  }
+
+  public divideToPuzzle(
+    sourceCanvas: HTMLCanvasElement,
+    targetCanvas: fabric.Canvas,
+    photoCanvasWidth: number,
+    photoCanvasHeight: number,
+    boardCanvasWidth: number,
+    boardCanvasHeight: number,
+    radius: number): void {
+
+    const puzzles: Puzzle[] = [];
+    let processId = 0;
+    const context = sourceCanvas.getContext('2d');
+    if (context !== null && targetCanvas !== undefined) {
+      const pointMap = this.createPointMap(photoCanvasWidth, photoCanvasHeight);
+      const polygons = this.createPolygonsFromPointMap(pointMap, context);
+      polygons.forEach(polygon => {
+        const puzzle = this.processPolygonAndGetData(polygon, processId.toString(), photoCanvasWidth, photoCanvasHeight,
+        context, radius, boardCanvasWidth, boardCanvasHeight);
+        if (puzzle !== null) {
+          puzzles.push(puzzle);
+        } else {
+          console.log('Error: error occured during creation of puzzle!');
+        }
+        processId = processId + 1;
+      });
+      this.insertPuzzlesToStore(puzzles);
+    } else {
+      console.log('Error: context is null or one of canvases not exists');
+    }
+  }
+
+  private insertPuzzlesToStore(puzzles: Puzzle[]): void {
+    this.store.dispatch(addPuzzles({ puzzles }));
   }
 
   public processPolygon(
@@ -65,8 +108,47 @@ export class PuzzleGeneratorQuadroService {
       point.y = radius + point.y - minY;
     });
 
-    this.drawBordersService.drawBorders(
+    this.drawBordersService.drawBordersAndInsertToBoard(
       targetCanvas,
+      imageData,
+      polygon,
+      radius,
+      boardCanvasWidth, boardCanvasHeight,
+      width, height,
+    );
+  }
+
+  public processPolygonAndGetData(
+    polygon: Polygon,
+    processId: string,
+    width: number, height: number,
+    sourceContext: CanvasRenderingContext2D,
+    radius = 20,
+    boardCanvasWidth: number,
+    boardCanvasHeight: number): Puzzle | null {
+    let minX = width;
+    let minY = height;
+    let maxX = 0;
+    let maxY = 0;
+    polygon.points.forEach(point => {
+      minX = Math.min(minX, point.x);
+      minY = Math.min(minY, point.y);
+      maxX = Math.max(maxX, point.x);
+      maxY = Math.max(maxY, point.y);
+    });
+
+    const newWidth = maxX - minX;
+    const newHeight = maxY - minY;
+    const imageData = sourceContext.getImageData(minX - radius, minY - radius,
+                                                 newWidth + 2 * radius, newHeight + 2 * radius);
+
+    polygon.points.forEach(point => {
+      point.x = radius + point.x - minX;
+      point.y = radius + point.y - minY;
+    });
+
+    return this.drawBordersService.drawBordersAndSave(
+      processId,
       imageData,
       polygon,
       radius,

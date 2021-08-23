@@ -40,7 +40,7 @@ export class OldPuzzleService {
         innerCircles: []
       };
 
-      this.drawBordersService.drawBorders(
+      this.drawBordersService.drawBordersAndInsertToBoard(
         fabricCanvas,
         imageData,
         polygon,
@@ -74,7 +74,7 @@ export class OldPuzzleService {
           innerCircles: []
         };
 
-        this.drawBordersService.drawBorders(
+        this.drawBordersService.drawBordersAndInsertToBoard(
           fabricCanvas,
           imageData,
           polygon,

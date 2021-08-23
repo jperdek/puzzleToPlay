@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { PuzzleAppState, puzzleListForSelect } from 'src/app/store';
+import { Puzzle } from 'src/app/store/puzzles/puzzles';
+import * as puzzleState from 'src/app/store/puzzles/puzzles.reducer';
 
 @Component({
   selector: 'app-puzzle-chooser',
@@ -7,9 +12,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PuzzleChooserComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store<PuzzleAppState>) { }
 
   ngOnInit(): void {
   }
 
+  public getPuzzles(): Observable<Puzzle[]> {
+    return this.store.pipe(select(puzzleListForSelect), select(puzzleState.selectAll));
+  }
 }

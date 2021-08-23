@@ -4,9 +4,7 @@ import { PuzzleBuilderRoutingModule } from './puzzle-builder-routing.module';
 import { PuzzleBoardComponent } from './pages/puzzle-board/puzzle-board.component';
 import { PuzzleBuilderComponent } from './puzzle-builder.component';
 import { MaterialModule } from '../material/material.module';
-import { BrowserModule } from '@angular/platform-browser';
 import { PuzzleChooserComponent } from './pages/puzzle-chooser/puzzle-chooser.component';
-
 
 
 @NgModule({

@@ -1,0 +1,96 @@
+.puzzle-part-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .higlighted-corner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+    top: 0;
+    right: 0;
+    background-color: #42c4ce;
+    border-radius: 0 4px 0 32px;
+
+    .unselected-image {
+      display: block;
+      margin-top: -4px;
+      margin-right: -4px;
+    }
+
+    .selected-image {
+      display: none;
+    }
+  }
+
+  .higlighted-corner:hover {
+    .selected-image {
+      display: block;
+      margin-top: -4px;
+      margin-right: -4px;
+    }
+
+    .unselected-image {
+      display: none;
+    }
+  }
+
+  .puzzle-to-choose:hover {
+    transition: all 0.3s ease-out;
+    color: rgba(255, 255, 255, 0.75);
+
+    .selected-image {
+      display: block;
+      margin-top: -4px;
+      margin-right: -4px;
+    }
+
+    .unselected-image {
+      display: none;
+    }
+  }
+
+  .puzzle-to-choose {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    width: 31%;
+    position: relative;
+    background-color: #c8c8c8;
+    border-radius: 15px;
+    margin: 20px;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+
+    &:before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: -16px;
+      right: -16px;
+      background: #42c4ce;
+      height: 32px;
+      width: 32px;
+      border-radius: 32px;
+      transform: scale(1);
+      transform-origin: 50% 50%;
+      transition: transform 0.25s ease-out;
+    }
+
+    &:hover:before {
+      transform: scale(21);
+    }
+  }
+
+  .puzzle-image {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
