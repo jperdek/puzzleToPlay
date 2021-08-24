@@ -48,7 +48,6 @@ export class DrawAdjacentPointsService {
     let smallX;
     let smallY;
 
-    console.log(polygon.points);
     for (let i = 0; i < polygon.points.length; i++){
       if (i + 1 === polygon.points.length) {
         next = 0;

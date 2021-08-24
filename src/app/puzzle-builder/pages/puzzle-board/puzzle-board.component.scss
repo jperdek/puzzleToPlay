@@ -2,6 +2,17 @@
   display: none;
 }
 
-#puzzleBoard {
-  background-color: pink;
+.puzzle-board-wrapper {
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+  width: calc(100vw - 400px) !important;
+  height: calc(100vh - 65px) !important;
+
+  #puzzleBoard {
+    background-color: pink;
+    position: relative !important;
+  }
 }
