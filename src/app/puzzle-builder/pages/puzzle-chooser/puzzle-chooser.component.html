@@ -1,14 +1,14 @@
 <div class="puzzle-select-block">
-    <h1> Select from puzzles</h1>
+    <h1 class="main-heading"> Select from puzzles</h1>
 
-    <div class="puzzle-list">
+    <div class="puzzle-wrapper-block">
         <div class="puzzle-part-block">
             <mat-card *ngFor="let puzzle of (getPuzzles() | async)" class="puzzle-to-choose" (click)="addToBoard(puzzle);">
                 <img class="puzzle-image" [src]="puzzle.puzzleImageSrc" alt="puzzle" />
                 <div class="higlighted-corner" href="#">
                     <img class="unselected-image" src="/assets/icons/select-unselected.svg" />
                     <img class="selected-image" src="/assets/icons/select-selected.svg" />
-                  </div>
+                </div>
             </mat-card>
         </div>
     </div>

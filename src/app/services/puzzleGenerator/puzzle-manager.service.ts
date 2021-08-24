@@ -10,9 +10,10 @@ import { PuzzleGeneratorQuadroService } from './puzzle-generator-quadro.service'
 })
 export class PuzzleManagerService {
 
-  static fabricCanvas: fabric.Canvas;
-  public static readonly nativeCanvasId = 'supportCanvas';
-  public static readonly fabricCanvasId = 'puzzleBoard';
+  private static fabricCanvas: fabric.Canvas;
+  private static readonly nativeCanvasId = 'supportCanvas';
+  private static readonly fabricCanvasId = 'puzzleBoard';
+  private static templatePreviewImage: HTMLImageElement | undefined = undefined;
 
   constructor(
     private puzzleGeneratorQuadroService: PuzzleGeneratorQuadroService,
@@ -40,6 +41,8 @@ export class PuzzleManagerService {
 
     const baseImage = new Image();
     baseImage.src = puzzleImagePath;
+    PuzzleManagerService.templatePreviewImage = baseImage;
+
     baseImage.onload = () => {
       if (context !== null) {
         context.drawImage(baseImage, 0, 0);
@@ -56,4 +59,8 @@ export class PuzzleManagerService {
   }
 
   public getManagePuzzleService(): ManagePuzzleService { return this.managePuzzleService; }
+
+  public getTemplatePreviewImage(): HTMLImageElement | undefined {
+    return PuzzleManagerService.templatePreviewImage;
+  }
 }

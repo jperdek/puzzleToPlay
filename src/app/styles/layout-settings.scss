@@ -1,0 +1,17 @@
+@mixin to-bottom-content($height-from-top: 60px) {
+  height: calc(100% - 60px);
+}
+
+@mixin side-puzzle-block() {
+  height: calc(100% - 32px);
+  margin-left: 16px;
+  margin-right: 8px;
+  width: calc(100% - 24px);
+}
+
+@mixin side-puzzle-block-no-scroll() {
+  height: calc(100% - 32px);
+  margin-left: 16px;
+  margin-right: 16px;
+  width: calc(100% - 32px);
+}

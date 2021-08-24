@@ -15,11 +15,13 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from './store';
 import { AppEffects } from './effects/app.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { InitialPageComponent } from './initial-page/initial-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainNavigationComponent,
+    InitialPageComponent,
   ],
   imports: [
     CommonModule,

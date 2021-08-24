@@ -19,6 +19,7 @@ export class ManagePuzzleService {
 
   public addPuzzleToBoard(puzzle: Puzzle, boardCanvas: fabric.Canvas): void {
     this.removeFromStore(puzzle.id);
+    boardCanvas.discardActiveObject();
     this.putCreatedImage(puzzle, boardCanvas);
   }
 
@@ -34,14 +35,16 @@ export class ManagePuzzleService {
         img.scaleToWidth((puzzle.width / puzzle.imageCanvasWidth) * puzzle.boardCanvasWidth);
         img.scaleToHeight((puzzle.height / puzzle.imageCanvasHeight) * puzzle.boardCanvasHeight);
         this.puzzleControllerManagerService.registerControllers(this);
-        boardCanvas.add(img);
-        img.bringToFront();
+        boardCanvas.add(img);               // puts image - puzzle - to canvas
+        boardCanvas.setActiveObject(img);   // set focus on inseted image
+        img.bringToFront();                 // bring image to front
     });
   }
 
   public removePuzzleFromBoard(puzzleOnBoard: fabric.Image, boardCanvas: fabric.Canvas): void {
     this.addToStore((puzzleOnBoard as ExtendedPuzzle).puzzleData);
     boardCanvas.remove(puzzleOnBoard);
+    boardCanvas.discardActiveObject();
   }
 
   private addToStore(puzzle: Puzzle): void {

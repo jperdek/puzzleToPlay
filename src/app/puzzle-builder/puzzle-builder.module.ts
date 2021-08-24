@@ -6,6 +6,7 @@ import { PuzzleBuilderComponent } from './puzzle-builder.component';
 import { MaterialModule } from '../material/material.module';
 import { PuzzleChooserComponent } from './pages/puzzle-chooser/puzzle-chooser.component';
 import { RemoveDirective } from '../directives/remove.directive';
+import { TemplatePreviewComponent } from './pages/template-preview/template-preview.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { RemoveDirective } from '../directives/remove.directive';
     PuzzleBoardComponent,
     PuzzleBuilderComponent,
     PuzzleChooserComponent,
-    RemoveDirective
+    RemoveDirective,
+    TemplatePreviewComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { PuzzleManagerService } from 'src/app/services/puzzleGenerator/puzzle-manager.service';
 
 
@@ -7,9 +7,15 @@ import { PuzzleManagerService } from 'src/app/services/puzzleGenerator/puzzle-ma
   templateUrl: './puzzle-board.component.html',
   styleUrls: ['./puzzle-board.component.scss'],
 })
-export class PuzzleBoardComponent {
+export class PuzzleBoardComponent implements AfterViewInit {
 
-  constructor(private puzzleManager: PuzzleManagerService) {}
+  constructor(private puzzleManager: PuzzleManagerService) { }
+
+  @ViewChild('puzzleBoard') canvas?: ElementRef;
+
+  public ngAfterViewInit(): void {
+    this.initialize();
+  }
 
   public initialize(): void {
     this.puzzleManager.initialize();

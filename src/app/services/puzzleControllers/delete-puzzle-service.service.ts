@@ -18,9 +18,17 @@ export class DeletePuzzleServiceService {
     return (eventData: MouseEvent, transform: fabric.Transform): boolean => {
       const puzzleFabricImage = transform.target as fabric.Image;
       const boardCanvas = puzzleFabricImage.canvas;
+
       if (boardCanvas !== undefined) {
-        managePuzzleService.removePuzzleFromBoard(puzzleFabricImage, boardCanvas);
-        boardCanvas.discardActiveObject().requestRenderAll();
+        if ('_objects' in puzzleFabricImage) {
+          ((puzzleFabricImage as any)._objects as fabric.Image[]).forEach((puzzleImage: fabric.Image) => {
+            managePuzzleService.removePuzzleFromBoard(puzzleImage, boardCanvas);
+          });
+          boardCanvas.discardActiveObject().requestRenderAll();
+        } else {
+          managePuzzleService.removePuzzleFromBoard(puzzleFabricImage, boardCanvas);
+          boardCanvas.discardActiveObject().requestRenderAll();
+        }
       } else {
         console.log('Error: canvas is undefined - cant return puzzle from board!');
       }

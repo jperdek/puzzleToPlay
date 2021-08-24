@@ -1,0 +1,25 @@
+@import "./color-settings.scss";
+
+@font-face {
+  font-family: "prompt";
+  src: url("/assets/fonts/Prompt-Bold.ttf") format("truetype");
+}
+
+@mixin main-heading {
+  font-size: 24px;
+  color: $main-heading-text-color;
+  font-family: "prompt";
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
+
+@mixin submain-heading {
+  font-size: 18px;
+  color: $light-text-color;
+  font-family: "prompt";
+  color: $main-heading-text-color;
+  text-decoration: none;
+}

@@ -1,0 +1,26 @@
+@import "./color-settings.scss";
+
+@mixin scrollbar-light {
+  ::ng-deep::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* Track */
+  ::ng-deep::-webkit-scrollbar-track {
+    background: $light-scrollbar-track-color;
+  }
+
+  /* Handle */
+  ::ng-deep::-webkit-scrollbar-thumb {
+    background: $light-scrollbar-handle-color;
+  }
+
+  /* Handle on hover */
+  ::ng-deep::-webkit-scrollbar-thumb:hover {
+    background: $light-scrollbar-handle-hover-color;
+  }
+
+  ::ng-deep.mat-drawer-side {
+    border-right: 0;
+  }
+}

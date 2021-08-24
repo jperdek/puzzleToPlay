@@ -199,7 +199,8 @@ export class PuzzleGeneratorQuadroService {
          const leftBottomPoint = pointMap[i][j - 1];
          const rightBottomPoint = pointMap[i][j];
 
-         this.drawScheme(sourceContext, leftBottomPoint, leftTopPoint, rightTopPoint, rightBottomPoint);
+         // uncomment to see the scheme - note that is neccessary to display hidden canvas too
+         // this.drawScheme(sourceContext, leftBottomPoint, leftTopPoint, rightTopPoint, rightBottomPoint);
 
          if (i === 1) {
           topConnection = Connection.none;
