@@ -73,7 +73,7 @@ export class SetPuzzleAreaOnBoardService {
       strokeDashArray,
       stroke: strokeColor,
       strokeWidth,
-      selectable: true
+      selectable
     });
 
     if (puzzleBoardPart) {
