@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
 import { Puzzle } from 'src/app/store/puzzles/puzzles';
+import { ImageSizeManagerService } from './image-size-manager.service';
 import { ManagePuzzleService } from './manage-puzzle.service';
 import { PuzzleGeneratorQuadroService } from './puzzle-generator-quadro.service';
 import { SetPuzzleAreaOnBoardService } from './set-puzzle-area-on-board.service';
@@ -11,15 +12,17 @@ import { SetPuzzleAreaOnBoardService } from './set-puzzle-area-on-board.service'
 })
 export class PuzzleManagerService {
 
-  private static fabricCanvas: fabric.Canvas;
+  private static puzzleBoard: fabric.Canvas;
   private static readonly nativeCanvasId = 'supportCanvas';
   private static readonly fabricCanvasId = 'puzzleBoard';
   private static templatePreviewImage: HTMLImageElement | undefined = undefined;
+  private radius = 20;
 
   constructor(
     private puzzleGeneratorQuadroService: PuzzleGeneratorQuadroService,
     private managePuzzleService: ManagePuzzleService,
-    private setPuzzleAreaOnBoardService: SetPuzzleAreaOnBoardService
+    private setPuzzleAreaOnBoardService: SetPuzzleAreaOnBoardService,
+    private imageSizeManagerService: ImageSizeManagerService
     ) { }
 
   public initialize(): void {
@@ -33,14 +36,14 @@ export class PuzzleManagerService {
   }
 
   public createCanvas(width = 900, height = 560, fabricCanvasId = PuzzleManagerService.fabricCanvasId): fabric.Canvas {
-    PuzzleManagerService.fabricCanvas = new fabric.Canvas(fabricCanvasId, {
+    PuzzleManagerService.puzzleBoard = new fabric.Canvas(fabricCanvasId, {
       selection: true,
       preserveObjectStacking: true,
       width,
       height,
     });
-    PuzzleManagerService.fabricCanvas.setZoom(1);
-    return PuzzleManagerService.fabricCanvas;
+    PuzzleManagerService.puzzleBoard.setZoom(1);
+    return PuzzleManagerService.puzzleBoard;
   }
 
   public createHTMLCanvasImage(puzzleImagePath = 'assets/test1.jpg', nativeCanvasId = PuzzleManagerService.nativeCanvasId): void {
@@ -55,14 +58,19 @@ export class PuzzleManagerService {
       if (context !== null) {
         context.drawImage(baseImage, 0, 0);
       }
-      console.log(PuzzleManagerService.fabricCanvas.width);
-      console.log(PuzzleManagerService.fabricCanvas.height);
+      console.log(PuzzleManagerService.puzzleBoard.width);
+      console.log(PuzzleManagerService.puzzleBoard.height);
 
-      if (PuzzleManagerService.fabricCanvas !== undefined &&
-        PuzzleManagerService.fabricCanvas.width !== undefined && PuzzleManagerService.fabricCanvas.height !== undefined) {
-        // this.setPuzzleAreaOnBoardService.drawBoard()
-        this.puzzleGeneratorQuadroService.divideToPuzzle(canvas, PuzzleManagerService.fabricCanvas,
-        baseImage.width, baseImage.height, PuzzleManagerService.fabricCanvas.width, PuzzleManagerService.fabricCanvas.height, 20);
+      if (PuzzleManagerService.puzzleBoard !== undefined &&
+        PuzzleManagerService.puzzleBoard.width !== undefined && PuzzleManagerService.puzzleBoard.height !== undefined) {
+          const interBoardSize = this.imageSizeManagerService.getSizeAccordingAspectRatio(
+            this.setPuzzleAreaOnBoardService.getPlayableWidth(PuzzleManagerService.puzzleBoard.width),
+            this.setPuzzleAreaOnBoardService.getPlayableHeight(PuzzleManagerService.puzzleBoard.height),
+            baseImage.width / baseImage.height);
+          this.setPuzzleAreaOnBoardService.drawBoard(interBoardSize.x, interBoardSize.y,
+          PuzzleManagerService.puzzleBoard);
+          this.puzzleGeneratorQuadroService.divideToPuzzle(canvas, PuzzleManagerService.puzzleBoard,
+        baseImage.width, baseImage.height, interBoardSize.x, interBoardSize.y, this.radius);
       } else {
         console.log('Error: board canvas not exists or its size is not included!');
       }
@@ -70,7 +78,7 @@ export class PuzzleManagerService {
   }
 
   public addPuzzleToBoard(puzzle: Puzzle): void {
-    this.managePuzzleService.addPuzzleToBoard(puzzle, PuzzleManagerService.fabricCanvas);
+    this.managePuzzleService.addPuzzleToBoard(puzzle, PuzzleManagerService.puzzleBoard);
   }
 
   public getManagePuzzleService(): ManagePuzzleService { return this.managePuzzleService; }

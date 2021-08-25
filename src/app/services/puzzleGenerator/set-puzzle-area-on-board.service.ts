@@ -1,9 +1,87 @@
 import { Injectable } from '@angular/core';
+import { fabric } from 'fabric';
+import { Point } from 'src/app/models/point';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SetPuzzleAreaOnBoardService {
 
+  margin = 16;
+  strokeWidth =  10;
+  dashSpace = 2;
+  strokeDashArray = [10, this.dashSpace];
+  strokeColor = '#8B008B';
+
   constructor() { }
+
+
+  public getPlayableWidth(boardWidth: number): number {
+    return boardWidth - 2 * this.strokeWidth - 2 * this.margin;
+  }
+
+  public getPlayableHeight(boardHeight: number): number {
+    return boardHeight - 2 * this.strokeWidth - 2 * this.margin;
+  }
+
+  public drawBoard(
+    playBoardWidth: number, playBoardHeight: number,
+    puzzleBoard: fabric.Canvas): void {
+    const newBoardWidth = playBoardWidth + this.strokeWidth;
+    const newBoardHeight = playBoardHeight + this.strokeWidth;
+    const newBoardLeft = this.margin;
+    const newBoardTop = this.margin;
+    this.createPuzzlePlayableRect(newBoardLeft, newBoardTop, newBoardWidth, newBoardHeight, puzzleBoard);
+  }
+
+  public createPuzzlePlayableRect(
+    left: number, top: number,
+    width: number, height: number,
+    puzzleBoard: fabric.Canvas): void {
+    const bottomHeightPart = top + height;
+    const leftWidthPart = left + width;
+    // top border
+    this.createDashLine([left + this.strokeWidth + this.dashSpace, top, leftWidthPart + this.strokeWidth, top],
+      left + this.strokeWidth + this.dashSpace, top, this.strokeDashArray, this.strokeColor, this.strokeWidth, puzzleBoard);
+
+    // right border
+    this.createDashLine([leftWidthPart, top + this.strokeWidth + this.dashSpace, leftWidthPart, bottomHeightPart + this.strokeWidth],
+      leftWidthPart, top + this.strokeWidth + this.dashSpace, this.strokeDashArray, this.strokeColor, this.strokeWidth, puzzleBoard);
+
+    // left border
+    this.createDashLine([left, top, left, bottomHeightPart - this.dashSpace],
+      left, top, this.strokeDashArray, this.strokeColor, this.strokeWidth, puzzleBoard);
+
+    // bottom border
+    this.createDashLine([left, bottomHeightPart, leftWidthPart - this.dashSpace, bottomHeightPart],
+      left, bottomHeightPart, this.strokeDashArray, this.strokeColor, this.strokeWidth, puzzleBoard);
+    puzzleBoard.renderAll();
+  }
+
+  public createDashLine(
+    lineCoordinates: number[],
+    left: number, top: number,
+    strokeDashArray: number[],
+    strokeColor: string,
+    strokeWidth: number,
+    puzzleBoard: fabric.Canvas,
+    selectable: boolean = false,
+    puzzleBoardPart: boolean = true): fabric.Line {
+    const dashedLine = new fabric.Line(lineCoordinates, {
+      left,
+      top,
+      strokeDashArray,
+      stroke: strokeColor,
+      strokeWidth,
+      selectable: true
+    });
+
+    if (puzzleBoardPart) {
+      dashedLine.sendToBack();
+    }
+
+    puzzleBoard.add(dashedLine);
+    return dashedLine;
+  }
+
 }
