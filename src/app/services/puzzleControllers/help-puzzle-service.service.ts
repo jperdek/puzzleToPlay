@@ -16,13 +16,18 @@ export class HelpPuzzleServiceService {
 
   public helpForPuzzle(managePuzzleService: ManagePuzzleService): fabric.ControlMouseEventHandler {
     return (eventData: MouseEvent, transform: fabric.Transform): boolean => {
-      const puzzleFabricImage = transform.target as fabric.Image;
-      const boardCanvas = puzzleFabricImage.canvas;
-      if (boardCanvas !== undefined) {
-        managePuzzleService.animatePuzzleLocationOnBoard(puzzleFabricImage, boardCanvas);
-        boardCanvas.discardActiveObject().requestRenderAll();
+      if ('_objects' in transform.target) {
+        console.log('Info: select only one puzzle to see information');
+        return true;
       } else {
-        console.log('Error: canvas is undefined - cant trigger help for puzzle!');
+        const puzzleFabricImage = transform.target as fabric.Image;
+        const boardCanvas = puzzleFabricImage.canvas;
+        if (boardCanvas !== undefined) {
+          managePuzzleService.animatePuzzleLocationOnBoard(puzzleFabricImage, boardCanvas);
+          boardCanvas.discardActiveObject().requestRenderAll();
+        } else {
+          console.log('Error: canvas is undefined - cant trigger help for puzzle!');
+        }
       }
       return true;
     };

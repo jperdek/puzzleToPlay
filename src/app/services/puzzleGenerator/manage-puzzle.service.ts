@@ -76,24 +76,46 @@ export class ManagePuzzleService {
       puzzleData.positionTopOnImage *
       (puzzleData.boardCanvasHeight / puzzleData.imageCanvasHeight) + topLeftPoint.y);
     boardCanvas.add(circle);
-    setTimeout(() => this.animateFlow(circle, boardCanvas, puzzleData.width *
-      (puzzleData.boardCanvasWidth / puzzleData.imageCanvasWidth)), 100);
+    setTimeout(() => this.animateFlow(circle, boardCanvas, (puzzleData.width / 2) *
+      (puzzleData.boardCanvasWidth / puzzleData.imageCanvasWidth), 5, circle.radius, circle.top, circle.left), 100);
   }
 
-  private animateFlow(circle: fabric.Circle, boardCanvas: fabric.Canvas, maxRadius: number): void {
+  private animateFlow(circle: fabric.Circle, boardCanvas: fabric.Canvas, maxRadius: number, repeat: number,
+                      previousIterationRadius: number | undefined,
+                      previousIterationTop: number | undefined,
+                      previousIterationLeft: number | undefined): void {
     if (circle.radius !== undefined && circle.radius < maxRadius) {
-      boardCanvas.remove(circle);
-      circle.radius = circle.radius + 5;
-      console.log(circle.radius);
+
+      if (circle.top !== undefined && circle.left !== undefined) {
+        circle.set('radius', circle.radius + 5);
+        circle.set('top', circle.top - 3);
+        circle.set('left', circle.left - 3);
+      }
+
       circle.setCoords();
       circle.calcCoords();
-      boardCanvas.add(circle);
-      //boardCanvas.renderAll();
-      setTimeout(() => this.animateFlow(circle, boardCanvas, maxRadius), 500);
+
+      boardCanvas.renderAll();
+      setTimeout(() => this.animateFlow(circle, boardCanvas, maxRadius, repeat,
+        previousIterationRadius, previousIterationTop, previousIterationLeft), 75);
     } else if (circle.radius === undefined) {
       console.log('Error: circle not have radius, cant create animation!');
+    } else {
+      if (repeat > 0) {
+        if (circle.radius !== undefined && circle.top !== undefined && circle.left !== undefined) {
+          circle.set('radius', previousIterationRadius);
+          circle.set('top', previousIterationTop);
+          circle.set('left', previousIterationLeft);
+        } else {
+          console.log('Error: one of previous iteration values for animation is undefined!');
+          return;
+        }
+        setTimeout(() => this.animateFlow(circle, boardCanvas, maxRadius, repeat - 1,
+          previousIterationRadius, previousIterationTop, previousIterationLeft), 100);
+      } else {
+        boardCanvas.remove(circle);
+      }
     }
-    console.log('Help animation will go here!');
   }
 
   public createCircle(
