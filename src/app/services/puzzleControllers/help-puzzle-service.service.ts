@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ManagePuzzleService } from '../puzzleGenerator/manage-puzzle.service';
+import { SetPuzzleAreaOnBoardService } from '../puzzleGenerator/set-puzzle-area-on-board.service';
 
 @Injectable({
   providedIn: 'root'

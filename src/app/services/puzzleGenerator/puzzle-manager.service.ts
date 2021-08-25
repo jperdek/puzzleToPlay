@@ -23,7 +23,8 @@ export class PuzzleManagerService {
     private managePuzzleService: ManagePuzzleService,
     private setPuzzleAreaOnBoardService: SetPuzzleAreaOnBoardService,
     private imageSizeManagerService: ImageSizeManagerService
-    ) { }
+    )
+    { this.managePuzzleService.setPuzzleAreaOnBoardService(this.setPuzzleAreaOnBoardService); }
 
   public initialize(): void {
     const puzzleBoardWrapperDiv = document.getElementById('puzzleBoardWrapper') as HTMLDivElement;

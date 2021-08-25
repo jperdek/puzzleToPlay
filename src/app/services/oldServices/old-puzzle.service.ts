@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
-import { Connection } from '../models/polygon';
-import { DrawBordersService } from '../services/draw-borders.service';
+import { Connection } from 'src/app/models/polygon';
+import { DrawBordersService } from '../puzzleGenerator/draw-borders.service';
 
 @Injectable({
   providedIn: 'root'

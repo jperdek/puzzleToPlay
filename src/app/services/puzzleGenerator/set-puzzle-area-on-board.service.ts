@@ -16,6 +16,10 @@ export class SetPuzzleAreaOnBoardService {
   constructor() { }
 
 
+  public getTopLeftPoint(): Point {
+    return { x: this.margin + this.strokeWidth, y: this.margin + this.strokeWidth };
+  }
+
   public getPlayableWidth(boardWidth: number): number {
     return boardWidth - 2 * this.strokeWidth - 2 * this.margin;
   }

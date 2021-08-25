@@ -132,6 +132,7 @@ export class PuzzleGeneratorQuadroService {
     let minY = height;
     let maxX = 0;
     let maxY = 0;
+
     polygon.points.forEach(point => {
       minX = Math.min(minX, point.x);
       minY = Math.min(minY, point.y);
@@ -144,6 +145,10 @@ export class PuzzleGeneratorQuadroService {
     const imageData = sourceContext.getImageData(minX - radius, minY - radius,
                                                  newWidth + 2 * radius, newHeight + 2 * radius);
 
+    // find center for making hint for given puzzle
+    const positionLeftOnImage = minX + (newWidth - 2 * radius) / 2;
+    const positionRightOnImage = minY + (newHeight - 2 * radius) / 2;
+
     polygon.points.forEach(point => {
       point.x = radius + point.x - minX;
       point.y = radius + point.y - minY;
@@ -154,6 +159,7 @@ export class PuzzleGeneratorQuadroService {
       imageData,
       polygon,
       radius,
+      positionLeftOnImage, positionRightOnImage,
       boardCanvasWidth, boardCanvasHeight,
       width, height,
     );

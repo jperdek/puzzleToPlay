@@ -54,6 +54,7 @@ export class DrawBordersService {
     imageData: ImageData,
     polygon: Polygon,
     radius = 20,
+    positionLeftOnImage: number, positionTopOnImage: number,
     boardCanvasWidth: number, boardCanvasHeight: number,
     imageCanvasWidth: number, imageCanvasHeight: number): Puzzle | null {
 
@@ -72,10 +73,20 @@ export class DrawBordersService {
       this.drawAdjacentPointService.redrawInnerCircles(imageData, polygon, imageData.width, radius);
       // create image for given puzzle
       return this.prepareImage(processId, imageData, imageData.width, imageData.height,
+        positionLeftOnImage, positionTopOnImage,
         boardCanvasWidth, boardCanvasHeight, imageCanvasWidth, imageCanvasHeight);
     }
 
     return null;
+  }
+
+  private removeScalingOptions(img: fabric.Image): void {
+    img.lockScalingX = true;
+    img.lockScalingY = true;
+    img.setControlsVisibility({
+      mt: false, mb: false, ml: false, mr: false,
+      tl: false, tr: false, bl: false, br: false
+    });
   }
 
   public putCreatedImage(
@@ -90,6 +101,7 @@ export class DrawBordersService {
     fabric.Image.fromURL(newCanvas.toDataURL(), (img) => {
         img.left = 0;
         img.top = 0;
+        this.removeScalingOptions(img);
         img.scaleToWidth((width / imageCanvasWidth) * boardCanvasWidth);
         img.scaleToHeight((height / imageCanvasHeight) * boardCanvasHeight);
         canvas.add(img);
@@ -101,6 +113,7 @@ export class DrawBordersService {
     id: string,
     imageData: ImageData,
     width: number, height: number,
+    positionLeftOnImage: number, positionTopOnImage: number,
     boardCanvasWidth: number, boardCanvasHeight: number,
     imageCanvasWidth: number, imageCanvasHeight: number): Puzzle {
     const newCanvas = this.createHTMLCanvas(width, height);
@@ -112,6 +125,8 @@ export class DrawBordersService {
       puzzleImageSrc: newCanvas.toDataURL(),
       width,
       height,
+      positionLeftOnImage,
+      positionTopOnImage,
       boardCanvasWidth,
       boardCanvasHeight,
       imageCanvasWidth,

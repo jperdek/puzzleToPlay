@@ -8,6 +8,7 @@ export enum Connection {
 
 export interface Polygon {
     points: Point[];
+    //initialPoints: Point[];
     connections: Connection[];
     innerCircles: ImageData[];
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
-import { Puzzle } from 'src/app/store/puzzles/puzzles';
 import { ManagePuzzleService } from '../puzzleGenerator/manage-puzzle.service';
 import { DeletePuzzleServiceService } from './delete-puzzle-service.service';
 import { HelpPuzzleServiceService } from './help-puzzle-service.service';
