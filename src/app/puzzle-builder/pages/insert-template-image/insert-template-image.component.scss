@@ -1,0 +1,65 @@
+@import "../../../styles/text-settings.scss";
+@import "../../../styles/layout-settings.scss";
+@import "../../../styles/color-settings.scss";
+
+.puzzle-image-uploader-block {
+  @include side-puzzle-block;
+
+  .main-heading {
+    @include main-heading;
+  }
+
+  .image-dragged {
+    background-color: $puzzle-board-background-color !important;
+
+    .upload-image-text {
+      color: #000000 !important;
+    }
+  }
+
+  .drop-puzzle-block {
+    position: relative;
+    z-index: 3;
+    outline: 2px dashed $mild-green;
+    outline-offset: -10px;
+    transition: outline-offset 0.2s ease-in-out, background-color 0.2s linear;
+
+    .file-label-block {
+      width: 95%;
+      height: 60vh;
+      margin: 0 auto;
+      display: grid;
+      justify-content: center;
+      justify-items: center;
+      align-items: center;
+      align-content: center;
+      margin-bottom: 1.5rem;
+      margin-top: 1.5rem;
+
+      .upload-image {
+        height: 80%;
+      }
+
+      .upload-image-text {
+        color: $mild-green;
+        font-size: 1rem;
+      }
+    }
+
+    .box_dragndrop {
+      display: inline;
+    }
+
+    .drop-puzzle-file {
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .uploading-puzzle,
+    .success-puzzle,
+    .error-puzzle {
+      display: none;
+    }
+  }
+}

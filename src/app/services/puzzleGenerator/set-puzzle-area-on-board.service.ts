@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
+import { ExtendedPuzzle } from 'src/app/models/extendedPuzzle';
 import { Point } from 'src/app/models/point';
 
 @Injectable({
@@ -88,4 +89,13 @@ export class SetPuzzleAreaOnBoardService {
     return dashedLine;
   }
 
+  public cleanBoardAll(puzzleBoard: fabric.Canvas): void {
+    puzzleBoard.clear();
+  }
+
+  public cleanBoardObjectsOnly(puzzleBoard: fabric.Canvas): void {
+    puzzleBoard.getObjects().filter((object: fabric.Object) => object.selectable === false).forEach(boardObject => {
+      puzzleBoard.remove(boardObject);
+    });
+  }
 }

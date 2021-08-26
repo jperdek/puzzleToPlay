@@ -19,10 +19,10 @@ export class HelpPuzzleServiceService {
       const boardCanvas = transform.target.canvas;
       if (boardCanvas !== undefined) {
         if ('_objects' in transform.target) {
+          console.log('Info: animations for multiple puzzles can take long');
           (transform.target as unknown as fabric.Canvas)._objects.forEach(puzzleFabricImage => {
             managePuzzleService.animatePuzzleLocationOnBoard(puzzleFabricImage as fabric.Image, boardCanvas);
           });
-          // console.log('Info: animation for multiple objects can take long');
           return true;
         } else {
           const puzzleFabricImage = transform.target as fabric.Image;

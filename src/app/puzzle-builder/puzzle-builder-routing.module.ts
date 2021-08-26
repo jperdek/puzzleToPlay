@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { PuzzleChooserComponent } from './pages/puzzle-chooser/puzzle-chooser.component';
 import { TemplatePreviewComponent } from './pages/template-preview/template-preview.component';
+import { InsertTemplateImageComponent } from './pages/insert-template-image/insert-template-image.component';
 
 const routes: Routes = [{
   path: '',
@@ -15,6 +16,10 @@ const routes: Routes = [{
 {
   path: 'preview',
   component: TemplatePreviewComponent
+},
+{
+  path: 'loadImage',
+  component: InsertTemplateImageComponent
 }];
 
 @NgModule({

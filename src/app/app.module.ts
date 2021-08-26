@@ -16,12 +16,13 @@ import { reducers } from './store';
 import { AppEffects } from './effects/app.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { InitialPageComponent } from './initial-page/initial-page.component';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainNavigationComponent,
-    InitialPageComponent,
+    InitialPageComponent
   ],
   imports: [
     CommonModule,

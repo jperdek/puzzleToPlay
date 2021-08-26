@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Sanitizer } from '@angular/core';
 import { fabric } from 'fabric';
 import { Puzzle } from 'src/app/store/puzzles/puzzles';
 import { ImageSizeManagerService } from './image-size-manager.service';
 import { ManagePuzzleService } from './manage-puzzle.service';
 import { PuzzleGeneratorQuadroService } from './puzzle-generator-quadro.service';
 import { SetPuzzleAreaOnBoardService } from './set-puzzle-area-on-board.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 
 @Injectable({
@@ -15,14 +16,15 @@ export class PuzzleManagerService {
   private static puzzleBoard: fabric.Canvas;
   private static readonly nativeCanvasId = 'supportCanvas';
   private static readonly fabricCanvasId = 'puzzleBoard';
-  private static templatePreviewImage: HTMLImageElement | undefined = undefined;
+  private static templatePreviewImage: SafeResourceUrl | undefined = undefined;
   private radius = 20;
 
   constructor(
     private puzzleGeneratorQuadroService: PuzzleGeneratorQuadroService,
     private managePuzzleService: ManagePuzzleService,
     private setPuzzleAreaOnBoardService: SetPuzzleAreaOnBoardService,
-    private imageSizeManagerService: ImageSizeManagerService
+    private imageSizeManagerService: ImageSizeManagerService,
+    private sanitizer: DomSanitizer
     )
     { this.managePuzzleService.setPuzzleAreaOnBoardService(this.setPuzzleAreaOnBoardService); }
 
@@ -53,14 +55,14 @@ export class PuzzleManagerService {
 
     const baseImage = new Image();
     baseImage.src = puzzleImagePath;
-    PuzzleManagerService.templatePreviewImage = baseImage;
+
+    // prepare preview image
+    PuzzleManagerService.templatePreviewImage = this.sanitizer.bypassSecurityTrustResourceUrl(puzzleImagePath);
 
     baseImage.onload = () => {
       if (context !== null) {
         context.drawImage(baseImage, 0, 0);
       }
-      console.log(PuzzleManagerService.puzzleBoard.width);
-      console.log(PuzzleManagerService.puzzleBoard.height);
 
       if (PuzzleManagerService.puzzleBoard !== undefined &&
         PuzzleManagerService.puzzleBoard.width !== undefined && PuzzleManagerService.puzzleBoard.height !== undefined) {
@@ -84,7 +86,12 @@ export class PuzzleManagerService {
 
   public getManagePuzzleService(): ManagePuzzleService { return this.managePuzzleService; }
 
-  public getTemplatePreviewImage(): HTMLImageElement | undefined {
+  public getTemplatePreviewImage(): SafeResourceUrl | undefined {
     return PuzzleManagerService.templatePreviewImage;
+  }
+
+  public clean(): void {
+    this.managePuzzleService.removeAllFromStore();
+    this.setPuzzleAreaOnBoardService.cleanBoardAll(PuzzleManagerService.puzzleBoard);
   }
 }

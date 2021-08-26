@@ -4,7 +4,7 @@ import { fabric } from 'fabric';
 import { ExtendedPuzzle } from 'src/app/models/extendedPuzzle';
 import { PuzzleAppState } from 'src/app/store';
 import { Puzzle } from 'src/app/store/puzzles/puzzles';
-import { addPuzzle, returnPuzzle } from 'src/app/store/puzzles/puzzles.actions';
+import { addPuzzle, returnPuzzle, returnPuzzles } from 'src/app/store/puzzles/puzzles.actions';
 import { PuzzleControllerManagerService } from '../puzzleControllers/puzzle-controller-manager.service';
 import { SetPuzzleAreaOnBoardService } from './set-puzzle-area-on-board.service';
 
@@ -134,5 +134,9 @@ export class ManagePuzzleService {
     });
 
     return circle;
+  }
+
+  public removeAllFromStore(): void {
+    this.store.dispatch(returnPuzzles());
   }
 }
