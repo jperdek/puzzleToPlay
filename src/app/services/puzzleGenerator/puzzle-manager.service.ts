@@ -62,6 +62,10 @@ export class PuzzleManagerService {
     baseImage.onload = () => {
       if (context !== null) {
         context.drawImage(baseImage, 0, 0);
+        // for some images aspect ratio can be problem - needs to reset size and redraw from image
+        canvas.width = baseImage.width;
+        canvas.height = baseImage.height;
+        context.drawImage(baseImage, 0, 0);
       }
 
       if (PuzzleManagerService.puzzleBoard !== undefined &&
