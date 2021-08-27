@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ExtendedPuzzle } from '../../models/extendedPuzzle';
-import { PuzzleManagerService } from './puzzle-manager.service';
+import { PuzzleManagerService } from '../puzzleGenerator/puzzle-manager.service';
 
 @Injectable({
   providedIn: 'root'

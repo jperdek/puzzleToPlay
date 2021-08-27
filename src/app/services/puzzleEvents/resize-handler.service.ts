@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { MatDateRangeInput } from '@angular/material/datepicker';
 import { ExtendedPuzzle } from 'src/app/models/extendedPuzzle';
-import { ImageSizeManagerService } from './image-size-manager.service';
-import { SetPuzzleAreaOnBoardService } from './set-puzzle-area-on-board.service';
+import { ImageSizeManagerService } from '../puzzleGenerator/image-size-manager.service';
+import { SetPuzzleAreaOnBoardService } from '../puzzleGenerator/set-puzzle-area-on-board.service';
+
 
 @Injectable({
   providedIn: 'root'

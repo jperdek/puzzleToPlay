@@ -1,11 +1,10 @@
 
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
+    <mat-toolbar-row class="puzzle-design-panel">
         <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
             <mat-icon>menu</mat-icon>
         </button>
         <span>Puzzle to play</span>
-
         <span class="menu-spacer"></span>
         <div fxShow="true" fxHide.lt-md>
             <button class="menu-component-item" color="accent" mat-icon-button id="loadImage" [routerLink]="'/puzzle/loadImage'">
