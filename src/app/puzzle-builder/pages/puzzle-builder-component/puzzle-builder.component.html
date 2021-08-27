@@ -1,8 +1,8 @@
 <mat-drawer-container class="drawer-content">
-    <mat-drawer class="puzzle-chooser-drawer" [disableClose]="true" mode="side" position="end" opened>
+    <mat-drawer class="puzzle-chooser-drawer" [disableClose]="true" mode="side" position="end" opened fxHide.lt-sm>
         <router-outlet></router-outlet>
     </mat-drawer>
-    <mat-drawer-content>
+    <mat-drawer-content class="main-puzzle-container">
         <app-puzzle-board></app-puzzle-board>
     </mat-drawer-content>
 </mat-drawer-container>

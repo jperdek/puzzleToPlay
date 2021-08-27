@@ -1,0 +1,27 @@
+@import "../../styles/color-settings.scss";
+
+.small-main-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+  height: 72px;
+  padding: 0;
+  color: #808080;
+
+  .small-menu-button {
+    height: 55px;
+    width: 55px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    border-radius: 0;
+    border: 3px solid $mild-green;
+
+    .small-menu-image {
+      height: 100%;
+    }
+  }
+}

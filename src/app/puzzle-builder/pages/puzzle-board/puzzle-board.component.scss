@@ -8,8 +8,16 @@
   justify-items: center;
   align-content: center;
   align-items: center;
-  width: calc(100vw - 400px) !important;
-  height: calc(100vh - 65px) !important;
+
+  @media (min-width: 600px) {
+    width: calc(100vw - 400px) !important;
+    height: calc(100vh - 65px) !important;
+  }
+
+  @media (max-width: 600px) {
+    width: 100vw !important;
+    height: calc(100vh - 130px) !important;
+  }
 
   #puzzleBoard {
     background-color: #ffdab9;

@@ -1,0 +1,23 @@
+.whole-puzzle-view {
+  height: 100vh;
+
+  .main-navigation-block {
+    height: 65px;
+  }
+
+  @media (min-width: 600px) {
+    .main-content {
+      height: calc(100% - 65px);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .main-content {
+      height: calc(100% - 130px);
+    }
+  }
+
+  .small-main-menu-block {
+    height: 65px;
+  }
+}
