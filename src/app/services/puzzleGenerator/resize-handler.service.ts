@@ -80,7 +80,7 @@ export class ResizeHandlerService {
       if (boardPuzzle.scaleX !== undefined && boardPuzzle.scaleY !== undefined){
         boardPuzzle.set({
           scaleX: boardPuzzle.scaleX * scaleRatioWidth,
-          scaleY: boardPuzzle.scaleY * scaleRatioHeight})
+          scaleY: boardPuzzle.scaleY * scaleRatioHeight});
       }
 
       if (boardPuzzle.left !== undefined && boardPuzzle.top !== undefined) {

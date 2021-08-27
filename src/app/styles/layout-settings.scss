@@ -1,9 +1,14 @@
+$large-left-panel-size: 400px;
+$medium-left-panel-size: 250px;
+$small-menu-height: 65px;
+$menu-height: 65px;
+
 @mixin to-bottom-content($height-from-top: 60px) {
   height: calc(100% - 60px);
 }
 
-@mixin side-puzzle-block() {
-  height: calc(100% - 32px);
+@mixin side-puzzle-block($margin-from-top: 32px) {
+  height: calc(100% - #{$margin-from-top});
   margin-left: 16px;
   margin-right: 8px;
   width: calc(100% - 24px);

@@ -1,3 +1,5 @@
+@import "../../../styles/layout-settings.scss";
+
 #supportCanvas {
   display: none;
 }
@@ -9,14 +11,19 @@
   align-content: center;
   align-items: center;
 
-  @media (min-width: 600px) {
-    width: calc(100vw - 400px) !important;
-    height: calc(100vh - 65px) !important;
+  @media (min-width: 960px) {
+    width: calc(100vw - #{$large-left-panel-size}) !important;
+    height: calc(100vh - #{$menu-height}) !important;
+  }
+
+  @media (min-width: 600px) and (max-width: 960px) {
+    width: calc(100vw - #{$medium-left-panel-size}) !important;
+    height: calc(100vh - #{$menu-height}) !important;
   }
 
   @media (max-width: 600px) {
     width: 100vw !important;
-    height: calc(100vh - 130px) !important;
+    height: calc(100vh - #{$menu-height} - #{$small-menu-height}) !important;
   }
 
   #puzzleBoard {

@@ -1,7 +1,17 @@
+@import "../../../styles/layout-settings.scss";
+
 .drawer-content {
   height: 100%;
 
-  .puzzle-chooser-drawer {
-    width: 400px;
+  @media (min-width: 960px) {
+    .puzzle-chooser-drawer {
+      width: $large-left-panel-size;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .puzzle-chooser-drawer {
+      width: $medium-left-panel-size;
+    }
   }
 }

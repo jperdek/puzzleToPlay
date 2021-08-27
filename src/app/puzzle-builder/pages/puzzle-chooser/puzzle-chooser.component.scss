@@ -3,7 +3,17 @@
 @import "../../../styles/scrollbar-settings.scss";
 
 .puzzle-select-block {
-  @include side-puzzle-block;
+  @media (min-width: 960px) {
+    @include side-puzzle-block($margin-from-top: 32px);
+  }
+
+  @media (min-width: 600px) and (max-width: 960px) {
+    @include side-puzzle-block($margin-from-top: 50px);
+  }
+
+  @media (max-width: 600px) {
+    @include side-puzzle-block($margin-from-top: 32px);
+  }
 
   .main-heading {
     @include main-heading;
@@ -76,7 +86,7 @@
       justify-items: center;
       align-content: center;
       align-items: center;
-      width: 30%;
+
       position: relative;
       background-color: #c8c8c8;
       border-radius: 15px;
@@ -84,6 +94,18 @@
       text-decoration: none;
       z-index: 0;
       overflow: hidden;
+
+      @media (min-width: 960px) {
+        width: 30%;
+      }
+
+      @media (min-width: 600px) and (max-width: 960px) {
+        width: 50%;
+      }
+
+      @media (max-width: 600px) {
+        width: 30%;
+      }
 
       &:before {
         content: "";
