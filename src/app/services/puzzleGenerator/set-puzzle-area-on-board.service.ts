@@ -37,6 +37,14 @@ export class SetPuzzleAreaOnBoardService {
     const newBoardLeft = this.margin;
     const newBoardTop = this.margin;
     this.createPuzzlePlayableRect(newBoardLeft, newBoardTop, newBoardWidth, newBoardHeight, puzzleBoard);
+
+    console.log(puzzleBoard.getWidth());
+    if (puzzleBoard.getWidth() > 790) {
+      console.log('Here');
+      this.setDesignImage(puzzleBoard, '/assets/designImages/puzzleBoard3.svg');
+    } else {
+      this.setDesignImage(puzzleBoard, '/assets/designImages/puzzleBoard2.svg');
+    }
   }
 
   public createPuzzlePlayableRect(
@@ -88,6 +96,18 @@ export class SetPuzzleAreaOnBoardService {
     this.setPreviousValues(dashedLine as unknown as ExtendedPuzzle, puzzleBoard);
     puzzleBoard.add(dashedLine);
     return dashedLine;
+  }
+
+  public setDesignImage(
+    puzzleBoard: fabric.Canvas,
+    designImagePath: string): void{
+    fabric.Image.fromURL(designImagePath, (img: fabric.Image) => {
+      img.scaleToWidth(puzzleBoard.getWidth());
+      img.scaleToHeight(puzzleBoard.getHeight());
+      puzzleBoard.setBackgroundImage(img, puzzleBoard.renderAll.bind(puzzleBoard), {
+        opacity: 0.3
+      });
+    });
   }
 
   public setPreviousValues(dashedLine: ExtendedPuzzle, puzzleBoard: fabric.Canvas): ExtendedPuzzle {
