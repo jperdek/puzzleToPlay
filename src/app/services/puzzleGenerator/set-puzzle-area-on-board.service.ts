@@ -85,7 +85,14 @@ export class SetPuzzleAreaOnBoardService {
       dashedLine.sendToBack();
     }
 
+    this.setPreviousValues(dashedLine as unknown as ExtendedPuzzle, puzzleBoard);
     puzzleBoard.add(dashedLine);
+    return dashedLine;
+  }
+
+  public setPreviousValues(dashedLine: ExtendedPuzzle, puzzleBoard: fabric.Canvas): ExtendedPuzzle {
+    dashedLine.previousCanvasWidth = puzzleBoard.getWidth();
+    dashedLine.previousCanvasHeight = puzzleBoard.getHeight();
     return dashedLine;
   }
 

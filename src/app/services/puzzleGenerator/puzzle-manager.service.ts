@@ -6,6 +6,9 @@ import { ManagePuzzleService } from './manage-puzzle.service';
 import { PuzzleGeneratorQuadroService } from './puzzle-generator-quadro.service';
 import { SetPuzzleAreaOnBoardService } from './set-puzzle-area-on-board.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ManipulationHandlerService } from './manipulation-handler.service';
+import { ResizeHandlerService } from './resize-handler.service';
+import { Point } from 'src/app/models/point';
 
 
 @Injectable({
@@ -18,20 +21,24 @@ export class PuzzleManagerService {
   private static readonly fabricCanvasId = 'puzzleBoard';
   private static templatePreviewImage: SafeResourceUrl | undefined = undefined;
   private radius = 20;
+  private baseImageAspectRatio: number = 800 / 900;
 
   constructor(
     private puzzleGeneratorQuadroService: PuzzleGeneratorQuadroService,
     private managePuzzleService: ManagePuzzleService,
     private setPuzzleAreaOnBoardService: SetPuzzleAreaOnBoardService,
     private imageSizeManagerService: ImageSizeManagerService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private manipulationHandlerService: ManipulationHandlerService,
+    private resizeHandlerService: ResizeHandlerService
     )
     { this.managePuzzleService.setPuzzleAreaOnBoardService(this.setPuzzleAreaOnBoardService); }
 
   public initialize(): void {
     const puzzleBoardWrapperDiv = document.getElementById('puzzleBoardWrapper') as HTMLDivElement;
     if (puzzleBoardWrapperDiv !== null){
-        this.createCanvas(puzzleBoardWrapperDiv.offsetWidth, puzzleBoardWrapperDiv.offsetHeight);
+      console.log(puzzleBoardWrapperDiv.offsetHeight);
+      this.createCanvas(puzzleBoardWrapperDiv.offsetWidth, puzzleBoardWrapperDiv.offsetHeight);
     } else {
       console.log('Error: canvas wrapper element not found - cant initialize canvas!');
     }
@@ -46,6 +53,9 @@ export class PuzzleManagerService {
       height,
     });
     PuzzleManagerService.puzzleBoard.setZoom(1);
+
+    // register for manipulation events - in case of resizing
+    this.manipulationHandlerService.registerCanvasOnManipulationEvents(PuzzleManagerService.puzzleBoard, this);
     return PuzzleManagerService.puzzleBoard;
   }
 
@@ -68,12 +78,18 @@ export class PuzzleManagerService {
         context.drawImage(baseImage, 0, 0);
       }
 
+      this.baseImageAspectRatio = baseImage.width / baseImage.height;
+      this.resizeHandlerService.registerResizeHandler(PuzzleManagerService.puzzleBoard,
+        this.setPuzzleAreaOnBoardService, this.baseImageAspectRatio, 'puzzleBoardWrapper');
+
       if (PuzzleManagerService.puzzleBoard !== undefined &&
         PuzzleManagerService.puzzleBoard.width !== undefined && PuzzleManagerService.puzzleBoard.height !== undefined) {
+          console.log(this.setPuzzleAreaOnBoardService.getPlayableHeight(PuzzleManagerService.puzzleBoard.height));
           const interBoardSize = this.imageSizeManagerService.getSizeAccordingAspectRatio(
             this.setPuzzleAreaOnBoardService.getPlayableWidth(PuzzleManagerService.puzzleBoard.width),
             this.setPuzzleAreaOnBoardService.getPlayableHeight(PuzzleManagerService.puzzleBoard.height),
-            baseImage.width / baseImage.height);
+            this.baseImageAspectRatio);
+          console.log(interBoardSize.y);
           this.setPuzzleAreaOnBoardService.drawBoard(interBoardSize.x, interBoardSize.y,
           PuzzleManagerService.puzzleBoard);
           this.puzzleGeneratorQuadroService.divideToPuzzle(canvas, PuzzleManagerService.puzzleBoard,
@@ -85,7 +101,15 @@ export class PuzzleManagerService {
   }
 
   public addPuzzleToBoard(puzzle: Puzzle): void {
-    this.managePuzzleService.addPuzzleToBoard(puzzle, PuzzleManagerService.puzzleBoard);
+    if (PuzzleManagerService.puzzleBoard.width !== undefined && PuzzleManagerService.puzzleBoard.height !== undefined) {
+      const interBoardSize = this.imageSizeManagerService.getSizeAccordingAspectRatio(
+        this.setPuzzleAreaOnBoardService.getPlayableWidth(PuzzleManagerService.puzzleBoard.width),
+        this.setPuzzleAreaOnBoardService.getPlayableHeight(PuzzleManagerService.puzzleBoard.height),
+        this.baseImageAspectRatio);
+      this.managePuzzleService.addPuzzleToBoard(puzzle, PuzzleManagerService.puzzleBoard, interBoardSize.x, interBoardSize.y);
+    } else {
+      console.log('Error: board width and height are undefined. Cant insert puzzle!');
+    }
   }
 
   public getManagePuzzleService(): ManagePuzzleService { return this.managePuzzleService; }
@@ -97,5 +121,19 @@ export class PuzzleManagerService {
   public clean(): void {
     this.managePuzzleService.removeAllFromStore();
     this.setPuzzleAreaOnBoardService.cleanBoardAll(PuzzleManagerService.puzzleBoard);
+  }
+
+  public getActualImageAspectRatio(): number { return this.baseImageAspectRatio; }
+
+  public getSizeAccordingAspectRatio(): Point {
+    if (PuzzleManagerService.puzzleBoard.width !== undefined && PuzzleManagerService.puzzleBoard.height !== undefined) {
+      return this.imageSizeManagerService.getSizeAccordingAspectRatio(
+        this.setPuzzleAreaOnBoardService.getPlayableWidth(PuzzleManagerService.puzzleBoard.width),
+        this.setPuzzleAreaOnBoardService.getPlayableHeight(PuzzleManagerService.puzzleBoard.height),
+        this.baseImageAspectRatio);
+    } else {
+      console.log('Error: board width and height are undefined. Cant insert puzzle!');
+      return { x: 0, y: 0 };
+    }
   }
 }

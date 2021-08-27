@@ -24,10 +24,11 @@ export class ManagePuzzleService {
     this.puzzleAreaOnBoardService = setPuzzleAreaOnBoardService;
   }
 
-  public addPuzzleToBoard(puzzle: Puzzle, boardCanvas: fabric.Canvas): void {
+  public addPuzzleToBoard(puzzle: Puzzle, boardCanvas: fabric.Canvas,
+                          boardCanvasWidth: number, boardCanvasHeight: number): void {
     this.removeFromStore(puzzle.id);
     boardCanvas.discardActiveObject();
-    this.putCreatedImage(puzzle, boardCanvas);
+    this.putCreatedImage(puzzle, boardCanvas, boardCanvasWidth, boardCanvasHeight);
   }
 
   private removeFromStore(puzzleId: string): void {
@@ -43,19 +44,26 @@ export class ManagePuzzleService {
     });
   }
 
-  private putCreatedImage(puzzle: Puzzle, boardCanvas: fabric.Canvas): void {
+  private putCreatedImage(puzzle: Puzzle, boardCanvas: fabric.Canvas,
+                          boardCanvasWidth: number, boardCanvasHeight: number): void {
     fabric.Image.fromURL(puzzle.puzzleImageSrc, (img) => {
         (img as ExtendedPuzzle).puzzleData = puzzle;
         img.left = 0;
         img.top = 0;
         this.removeScalingOptions(img);
-        img.scaleToWidth((puzzle.width / puzzle.imageCanvasWidth) * puzzle.boardCanvasWidth);
-        img.scaleToHeight((puzzle.height / puzzle.imageCanvasHeight) * puzzle.boardCanvasHeight);
+        img.scaleToWidth((puzzle.width / puzzle.imageCanvasWidth) * boardCanvasWidth);
+        img.scaleToHeight((puzzle.height / puzzle.imageCanvasHeight) * boardCanvasHeight);
+        this.setForResize(img as ExtendedPuzzle, boardCanvasWidth, boardCanvasHeight);
         this.puzzleControllerManagerService.registerControllers(this);
         boardCanvas.add(img);               // puts image - puzzle - to canvas
         boardCanvas.setActiveObject(img);   // set focus on inseted image
         img.bringToFront();                 // bring image to front
     });
+  }
+
+  private setForResize(boardPuzzle: ExtendedPuzzle, boardCanvasWidth: number, boardCanvasHeight: number): void {
+    boardPuzzle.previousCanvasWidth = boardCanvasWidth;
+    boardPuzzle.previousCanvasHeight = boardCanvasHeight;
   }
 
   public removePuzzleFromBoard(puzzleOnBoard: fabric.Image, boardCanvas: fabric.Canvas): void {

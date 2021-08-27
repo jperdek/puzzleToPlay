@@ -16,3 +16,7 @@
     position: relative !important;
   }
 }
+
+::ng-deep .mat-drawer-content {
+  height: auto;
+}

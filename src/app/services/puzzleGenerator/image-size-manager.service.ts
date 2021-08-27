@@ -12,6 +12,11 @@ export class ImageSizeManagerService {
     if (width < height) {
       const obtainedWidth = width;
       const obtainedHeight = obtainedWidth / aspectRatio;
+      if (obtainedHeight > height) {
+        const obtainedNewHeight = height;
+        const obtainedNewWidth = obtainedNewHeight * aspectRatio;
+        return { x: obtainedNewWidth, y: obtainedNewHeight};
+      }
       return { x: obtainedWidth, y: obtainedHeight};
     } else {
       const obtainedHeight = height;
