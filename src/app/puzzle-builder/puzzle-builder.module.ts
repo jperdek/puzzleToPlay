@@ -15,7 +15,7 @@ import { TemplatePreviewBottomSheetComponent } from './pages/bottom-sheets/templ
 import { InsertTemplateImageBottomSheetComponent } from './pages/bottom-sheets/insert-template-image-bottom-sheet/insert-template-image-bottom-sheet.component';
 import { ZoomManagementComponent } from './pages/zoom-management/zoom-management.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ZoomMenuComponent } from '../zoom-menu/zoom-menu.component';
+import { ZoomMenuComponent } from './components/zoom-menu/zoom-menu.component';
 
 
 @NgModule({

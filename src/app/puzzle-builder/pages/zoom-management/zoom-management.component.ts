@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { ZoomManagementInterface } from 'src/app/models/zoomManagementInterface';
 import { ZoomManagerService } from 'src/app/services/puzzleEvents/zoom-manager.service';
 import { PuzzleManagerService } from 'src/app/services/puzzleGenerator/puzzle-manager.service';
 
@@ -7,7 +9,7 @@ import { PuzzleManagerService } from 'src/app/services/puzzleGenerator/puzzle-ma
   templateUrl: './zoom-management.component.html',
   styleUrls: ['./zoom-management.component.scss']
 })
-export class ZoomManagementComponent {
+export class ZoomManagementComponent implements ZoomManagementInterface {
 
   centerX = 25;
   centerY = 25;
@@ -48,5 +50,15 @@ export class ZoomManagementComponent {
   public applyZoomReset(): void {
     const puzzleBoard = this.puzzleManagerService.getPuzzleBoard();
     this.zoomManagerService.resetZoom(puzzleBoard);
+  }
+
+  public toggleZoom($event: MatSlideToggleChange): void {
+    if ($event.checked) {
+      const zoomContents = document.getElementsByClassName('zoom-content');
+      Array.from(zoomContents).forEach(zoomContentDiv => zoomContentDiv.classList.add('hide-zoom-content'));
+    } else {
+      const zoomContents = document.getElementsByClassName('zoom-content');
+      Array.from(zoomContents).forEach(zoomContentDiv => zoomContentDiv.classList.remove('hide-zoom-content'));
+    }
   }
 }

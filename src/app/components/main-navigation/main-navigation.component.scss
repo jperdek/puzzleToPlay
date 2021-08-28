@@ -3,7 +3,7 @@
 }
 
 .mat-drawer {
-  width: 20%;
+  width: 300px;
 }
 
 .mat-drawer-container {
@@ -28,4 +28,24 @@
 
 .puzzle-design-panel {
   background-image: url("/assets/designImages/puzzlePanel2.svg");
+}
+
+.main-menu-navlist {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+
+  .vertical-spacer {
+    flex: 1;
+  }
+
+  .zoom-toggles {
+    margin-left: 40px;
+  }
+}
+
+@media (min-width: 600px) {
+  .zoom-toggles {
+    display: none;
+  }
 }

@@ -11,6 +11,27 @@
   align-content: center;
   align-items: center;
 
+  .hide-zoom-content {
+    display: none !important;
+  }
+
+  .zoom-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 0;
+    justify-items: right;
+    justify-content: right;
+
+    .spacer {
+      flex-grow: 1;
+    }
+
+    app-zoom-menu {
+      position: relative;
+    }
+  }
+
   @media (min-width: 960px) {
     width: calc(100vw - #{$large-left-panel-size}) !important;
     height: calc(100vh - #{$menu-height}) !important;

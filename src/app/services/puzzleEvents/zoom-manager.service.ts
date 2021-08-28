@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
-import { ZoomManagementComponent } from 'src/app/puzzle-builder/pages/zoom-management/zoom-management.component';
+import { ZoomManagementInterface } from 'src/app/models/zoomManagementInterface';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,18 +13,18 @@ export class ZoomManagerService {
   defaultZoom = 1.0;
   zoomPositionX = 25;
   zoomPositionY = 25;
-  zoomManagementComponent?: ZoomManagementComponent;
+  zoomManagementComponent?: ZoomManagementInterface[] = [];
 
   constructor() { }
 
-  public initForComponent(zoomComponent: ZoomManagementComponent): void {
-    this.zoomManagementComponent = zoomComponent;
+  public initForComponent(zoomComponent: ZoomManagementInterface): void {
+    this.zoomManagementComponent?.push(zoomComponent);
   }
 
   public saveDefaultZoom(zoom: number): void { this.defaultZoom = zoom; }
 
   public resetZoom(puzzleBoard: fabric.Canvas): void {
-    puzzleBoard.setViewportTransform([1, 0, 0, 1, 0, 0]); ;
+    puzzleBoard.setViewportTransform([1, 0, 0, 1, 0, 0]);
     puzzleBoard.setZoom(this.defaultZoom);
   }
 
@@ -54,7 +55,7 @@ export class ZoomManagerService {
   public setZoomPosition(x: number, y: number): void {
     this.zoomPositionX = parseFloat(x.toFixed(2));
     this.zoomPositionY = parseFloat(y.toFixed(2));
-    this.zoomManagementComponent?.setCenterXAndY(this.zoomPositionX, this.zoomPositionY);
+    this.zoomManagementComponent?.forEach(component => component.setCenterXAndY(this.zoomPositionX, this.zoomPositionY));
   }
 
   public getZoomPositionX(): number { return this.zoomPositionX; }

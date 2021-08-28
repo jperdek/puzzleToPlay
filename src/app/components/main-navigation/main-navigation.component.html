@@ -24,7 +24,7 @@
 </mat-toolbar>
 <mat-sidenav-container fxFlexFill class="sidenav-block" fxHide.gt-sm>
     <mat-sidenav #sidenav>
-        <mat-nav-list>
+        <mat-nav-list class="main-menu-navlist">
             <a [routerLink]="'/puzzle/loadImage'" mat-list-item>
                 <mat-icon>load</mat-icon>
                 <span>Load image</span>
@@ -41,6 +41,8 @@
                 <mat-icon>load</mat-icon>
                 <span>Zoom</span>
             </a>
+            <div class="vertical-spacer"></div>
+            <mat-slide-toggle class="zoom-toggles" (change)="toggleZoom($event)" >Show / hide zoom</mat-slide-toggle>
         </mat-nav-list>
     </mat-sidenav>
 </mat-sidenav-container>
