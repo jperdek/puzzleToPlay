@@ -14,6 +14,8 @@ import { SetPuzzleAreaOnBoardService } from './set-puzzle-area-on-board.service'
 })
 export class ManagePuzzleService {
 
+  enablePuzzleRotation = true;
+
   private puzzleAreaOnBoardService?: SetPuzzleAreaOnBoardService;
 
   constructor(
@@ -28,7 +30,11 @@ export class ManagePuzzleService {
                           boardCanvasWidth: number, boardCanvasHeight: number): void {
     this.removeFromStore(puzzle.id);
     boardCanvas.discardActiveObject();
-    this.putCreatedImage(puzzle, boardCanvas, boardCanvasWidth, boardCanvasHeight);
+    if (this.enablePuzzleRotation) {
+      this.putCreatedImage(puzzle, boardCanvas, boardCanvasWidth, boardCanvasHeight);
+    } else {
+      this.putCreatedImageWithoutRotation(puzzle, boardCanvas, boardCanvasWidth, boardCanvasHeight);
+    }
   }
 
   private removeFromStore(puzzleId: string): void {
@@ -48,16 +54,42 @@ export class ManagePuzzleService {
                           boardCanvasWidth: number, boardCanvasHeight: number): void {
     fabric.Image.fromURL(puzzle.puzzleImageSrc, (img) => {
         (img as ExtendedPuzzle).puzzleData = puzzle;
-        img.left = 0;
-        img.top = 0;
-        this.removeScalingOptions(img);
-        img.scaleToWidth((puzzle.width / puzzle.imageCanvasWidth) * boardCanvasWidth);
-        img.scaleToHeight((puzzle.height / puzzle.imageCanvasHeight) * boardCanvasHeight);
-        this.setForResize(img as ExtendedPuzzle, boardCanvasWidth, boardCanvasHeight);
-        this.puzzleControllerManagerService.registerControllers(this);
-        boardCanvas.add(img);               // puts image - puzzle - to canvas
-        boardCanvas.setActiveObject(img);   // set focus on inseted image
-        img.bringToFront();                 // bring image to front
+        img.set('angle', puzzle.rotateAngle);
+        img.left = 25;
+        img.top = 25;
+        const group = new fabric.Group([img]);
+        fabric.Image.fromURL(img.toDataURL({}), (image) => {
+          if (group.width !== undefined && group.height !== undefined) {
+            image.scaleToWidth((group.width / puzzle.imageCanvasWidth) * boardCanvasWidth);
+            image.scaleToHeight((group.height / puzzle.imageCanvasHeight) * boardCanvasHeight);
+          }
+          (image as ExtendedPuzzle).puzzleData = puzzle;
+          this.removeScalingOptions(image);
+          this.setForResize(image as ExtendedPuzzle, boardCanvasWidth, boardCanvasHeight);
+          this.puzzleControllerManagerService.registerControllers(this);
+          boardCanvas.add(image);               // puts image - puzzle - to canvas
+          boardCanvas.setActiveObject(image);   // set focus on inseted image
+          image.bringToFront();                 // bring image to front
+        });
+    });
+  }
+
+
+  private putCreatedImageWithoutRotation(puzzle: Puzzle, boardCanvas: fabric.Canvas,
+                                         boardCanvasWidth: number, boardCanvasHeight: number): void {
+    fabric.Image.fromURL(puzzle.puzzleImageSrc, (img) => {
+      (img as ExtendedPuzzle).puzzleData = puzzle;
+      img.left = 25;
+      img.top = 25;
+      img.scaleToWidth((puzzle.width / puzzle.imageCanvasWidth) * boardCanvasWidth);
+      img.scaleToHeight((puzzle.height / puzzle.imageCanvasHeight) * boardCanvasHeight);
+      this.removeScalingOptions(img);
+      this.setForResize(img as ExtendedPuzzle, boardCanvasWidth, boardCanvasHeight);
+      this.puzzleControllerManagerService.registerControllers(this);
+
+      boardCanvas.add(img);               // puts image - puzzle - to canvas
+      boardCanvas.setActiveObject(img);   // set focus on inseted image
+      img.bringToFront();                 // bring image to front
     });
   }
 

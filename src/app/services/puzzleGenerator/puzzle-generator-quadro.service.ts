@@ -8,6 +8,7 @@ import { Puzzle } from 'src/app/store/puzzles/puzzles';
 import { addPuzzles } from 'src/app/store/puzzles/puzzles.actions';
 import { Connection, Polygon } from 'src/app/models/polygon';
 import { Point } from 'src/app/models/point';
+import { ShufflePuzzlesService } from '../utils/shuffle-puzzles.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class PuzzleGeneratorQuadroService {
 
   constructor(
     private drawBordersService: DrawBordersService,
-    private store: Store<PuzzleAppState>) { }
+    private store: Store<PuzzleAppState>,
+    private shufflePuzzlesService: ShufflePuzzlesService) { }
 
 
   // previous method without involvement of ngrx
@@ -53,7 +55,8 @@ export class PuzzleGeneratorQuadroService {
     photoCanvasHeight: number,
     boardCanvasWidth: number,
     boardCanvasHeight: number,
-    radius: number): void {
+    radius: number,
+    randomAngle = true): void {
 
     const puzzles: Puzzle[] = [];
     let processId = 0;
@@ -63,7 +66,7 @@ export class PuzzleGeneratorQuadroService {
       const polygons = this.createPolygonsFromPointMap(pointMap, context);
       polygons.forEach(polygon => {
         const puzzle = this.processPolygonAndGetData(polygon, processId.toString(), photoCanvasWidth, photoCanvasHeight,
-        context, radius, boardCanvasWidth, boardCanvasHeight);
+        context, radius, boardCanvasWidth, boardCanvasHeight, randomAngle);
         if (puzzle !== null) {
           puzzles.push(puzzle);
         } else {
@@ -71,6 +74,8 @@ export class PuzzleGeneratorQuadroService {
         }
         processId = processId + 1;
       });
+
+      // this.shufflePuzzlesService.shuffleArray(puzzles);
       this.insertPuzzlesToStore(puzzles);
     } else {
       console.log('Error: context is null or one of canvases not exists');
@@ -127,7 +132,8 @@ export class PuzzleGeneratorQuadroService {
     sourceContext: CanvasRenderingContext2D,
     radius = 20,
     boardCanvasWidth: number,
-    boardCanvasHeight: number): Puzzle | null {
+    boardCanvasHeight: number,
+    randomAngle = true): Puzzle | null {
     let minX = width;
     let minY = height;
     let maxX = 0;
@@ -162,6 +168,7 @@ export class PuzzleGeneratorQuadroService {
       positionLeftOnImage, positionTopOnImage,
       boardCanvasWidth, boardCanvasHeight,
       width, height,
+      randomAngle
     );
   }
 

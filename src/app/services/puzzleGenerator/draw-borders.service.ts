@@ -56,7 +56,8 @@ export class DrawBordersService {
     radius = 20,
     positionLeftOnImage: number, positionTopOnImage: number,
     boardCanvasWidth: number, boardCanvasHeight: number,
-    imageCanvasWidth: number, imageCanvasHeight: number): Puzzle | null {
+    imageCanvasWidth: number, imageCanvasHeight: number,
+    randomAngle = true): Puzzle | null {
 
     const newCanvas = this.createHTMLCanvas(2 * radius, 2 * radius);
     const context = newCanvas.getContext('2d');
@@ -74,7 +75,7 @@ export class DrawBordersService {
       // create image for given puzzle
       return this.prepareImage(processId, imageData, imageData.width, imageData.height,
         positionLeftOnImage, positionTopOnImage,
-        boardCanvasWidth, boardCanvasHeight, imageCanvasWidth, imageCanvasHeight);
+        boardCanvasWidth, boardCanvasHeight, imageCanvasWidth, imageCanvasHeight, randomAngle);
     }
 
     return null;
@@ -101,6 +102,7 @@ export class DrawBordersService {
     fabric.Image.fromURL(newCanvas.toDataURL(), (img) => {
         img.left = 0;
         img.top = 0;
+        // img.setAngle(this.randomInteger(0, 360));
         this.removeScalingOptions(img);
         img.scaleToWidth((width / imageCanvasWidth) * boardCanvasWidth);
         img.scaleToHeight((height / imageCanvasHeight) * boardCanvasHeight);
@@ -109,15 +111,33 @@ export class DrawBordersService {
     });
   }
 
+  public randomInteger(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  public degreesToRadians(degrees: number): number {return degrees * (Math.PI / 180.0); }
+
+
   public prepareImage(
     id: string,
     imageData: ImageData,
     width: number, height: number,
     positionLeftOnImage: number, positionTopOnImage: number,
     boardCanvasWidth: number, boardCanvasHeight: number,
-    imageCanvasWidth: number, imageCanvasHeight: number): Puzzle {
+    imageCanvasWidth: number, imageCanvasHeight: number,
+    randomAngle = true): Puzzle {
+
+    let rotateAngle;
+    if (randomAngle) {
+      rotateAngle = this.randomInteger(0, 360); // random angle
+    } else {
+      rotateAngle = 0;
+    }
     const newCanvas = this.createHTMLCanvas(width, height);
-    newCanvas.getContext('2d')?.putImageData(imageData, 0, 0);
+    const context = newCanvas.getContext('2d');
+    if (context !== null) {
+      context.putImageData(imageData, 0, 0);
+    }
 
     return {
       id,
@@ -125,6 +145,7 @@ export class DrawBordersService {
       puzzleImageSrc: newCanvas.toDataURL(),
       width,
       height,
+      rotateAngle,
       positionLeftOnImage,
       positionTopOnImage,
       boardCanvasWidth,
@@ -133,6 +154,25 @@ export class DrawBordersService {
       imageCanvasHeight,
     };
   }
+
+  private rotateImageAsImageData(imageData: ImageData, rotateAngle: number): void {
+    const resultCanvasWidth = rotateAngle % 180 === 0 ? imageData.width : imageData.height;
+    const resultCanvasHeight = rotateAngle % 180 === 0 ? imageData.height : imageData.width;
+    const newCanvas2 = this.createHTMLCanvas(imageData.width, imageData.height);
+    const newCanvas = this.createHTMLCanvas(resultCanvasWidth, resultCanvasHeight);
+    const context = newCanvas.getContext('2d');
+    const context2 = newCanvas2.getContext('2d');
+
+    if (context !== null && context2 !== null) {
+      context.save();
+      context2.putImageData(imageData, 0, 0);
+      context.translate(imageData.width / 2, imageData.height / 2);
+      context.rotate(this.degreesToRadians(90));
+      context.drawImage(newCanvas2, -imageData.width / 2, -imageData.height / 2);
+      context.restore();
+    }
+  }
+
 
   public polygonScan(
     polygon: Polygon,

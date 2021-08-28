@@ -39,7 +39,6 @@ export class PuzzleManagerService {
   public initialize(): void {
     const puzzleBoardWrapperDiv = document.getElementById('puzzleBoardWrapper') as HTMLDivElement;
     if (puzzleBoardWrapperDiv !== null){
-      console.log(puzzleBoardWrapperDiv.offsetHeight);
       this.createCanvas(puzzleBoardWrapperDiv.offsetWidth, puzzleBoardWrapperDiv.offsetHeight);
     } else {
       console.log('Error: canvas wrapper element not found - cant initialize canvas!');
@@ -62,7 +61,9 @@ export class PuzzleManagerService {
     return PuzzleManagerService.puzzleBoard;
   }
 
-  public createHTMLCanvasImage(puzzleImagePath = 'assets/test1.jpg', nativeCanvasId = PuzzleManagerService.nativeCanvasId): void {
+  public createHTMLCanvasImage(puzzleImagePath = 'assets/test1.jpg',
+                               nativeCanvasId = PuzzleManagerService.nativeCanvasId,
+                               randomAngle = true): void {
     const canvas = document.getElementById(nativeCanvasId) as HTMLCanvasElement;
     const context = canvas.getContext('2d');
 
@@ -87,16 +88,14 @@ export class PuzzleManagerService {
 
       if (PuzzleManagerService.puzzleBoard !== undefined &&
         PuzzleManagerService.puzzleBoard.width !== undefined && PuzzleManagerService.puzzleBoard.height !== undefined) {
-          console.log(this.setPuzzleAreaOnBoardService.getPlayableHeight(PuzzleManagerService.puzzleBoard.height));
           const interBoardSize = this.imageSizeManagerService.getSizeAccordingAspectRatio(
             this.setPuzzleAreaOnBoardService.getPlayableWidth(PuzzleManagerService.puzzleBoard.width),
             this.setPuzzleAreaOnBoardService.getPlayableHeight(PuzzleManagerService.puzzleBoard.height),
             this.baseImageAspectRatio);
-          console.log(interBoardSize.y);
           this.setPuzzleAreaOnBoardService.drawBoard(interBoardSize.x, interBoardSize.y,
           PuzzleManagerService.puzzleBoard);
           this.puzzleGeneratorQuadroService.divideToPuzzle(canvas, PuzzleManagerService.puzzleBoard,
-        baseImage.width, baseImage.height, interBoardSize.x, interBoardSize.y, this.radius);
+        baseImage.width, baseImage.height, interBoardSize.x, interBoardSize.y, this.radius, randomAngle);
       } else {
         console.log('Error: board canvas not exists or its size is not included!');
       }
