@@ -1,0 +1,52 @@
+<div class="zoom-management-part">
+    <h1 class="main-heading">Zoom management</h1>
+
+    <div class="zoom-focus-block">
+        <mat-form-field appearance="outline" floatLabel="always" class="center-input-part">
+            <mat-label class="center-label">Position X</mat-label>
+            <input matInput class="center-input center-x" type="number" placeholder="0" [(ngModel)]="centerX"
+            name="centerX">
+            <span matSuffix class="suffix">x</span>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always" class="center-input-part">
+            <mat-label class="center-label">Position Y</mat-label>
+            <input matInput class="center-input center-y" type="number" placeholder="0" [(ngModel)]="centerY"
+            name="centerY">
+            <span matSuffix class="suffix">y</span>
+        </mat-form-field>
+    </div>
+
+    <div class="zoom-focus-block">
+        <mat-form-field appearance="outline" floatLabel="always" class="zoom-input-value-part">
+            
+            <mat-label class="zoom-label">Zoom value</mat-label>
+            <input matInput class="zoom-value" type="number" placeholder="1.0" [(ngModel)]="zoomValue"
+            name="centerX" (change)="setZoom();">
+            <span matSuffix class="suffix-set-zoom-button">
+                <button mat-button class="zoom-change-button" (click)="setZoomFromDefaultToPoint();">
+                    <img src="assets/icons/zoom/zoom-fit.svg" alt="fit value zooming button"/>
+                </button>
+            </span>
+        </mat-form-field>
+    </div>
+
+    <div class="zoom-buttons">
+        <button mat-icon-button aria-label="Zoom in button"
+            class="zoom-button zoom-button-left" (click)="applyZoomIn()">
+            <img class="zoom-button-image" src="assets/icons/zoom/zoom-in-yellow.svg" alt="preview"/>
+        </button>
+        <button mat-icon-button aria-label="Zoom out button"
+            class="zoom-button zoom-button-right" (click)="applyZoomOut()">
+            <img class="zoom-button-image" src="assets/icons/zoom/zoom-out-yellow.svg" alt="preview"/>
+        </button>
+    </div>
+
+    <div class="vertical-spacer"></div>
+    
+    <div class="reset-button-block">
+        <button mat-icon-button aria-label="Reset zoom button"
+            class="zoom-button zoom-button-left" (click)="applyZoomReset()">
+            <img class="zoom-button-image" src="assets/icons/zoom/zoom-reset.svg" alt="preview"/>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,176 @@
+@import "../../../styles/text-settings.scss";
+@import "../../../styles/layout-settings.scss";
+@import "../../../styles/color-settings.scss";
+
+.zoom-management-part {
+  display: flex;
+  flex-direction: column;
+  @include side-puzzle-block-no-scroll;
+
+  .main-heading {
+    @include main-heading;
+  }
+
+  .zoom-focus-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-items: center;
+    width: 100%;
+    color: $mild-green;
+
+    ::ng-deep .mat-form-field-prefix,
+    ::ng-deep .mat-form-field-suffix {
+      white-space: nowrap;
+      display: flex;
+      align-content: center;
+      align-items: center;
+      justify-content: center;
+      justify-items: center;
+      position: static;
+      padding: 0;
+    }
+
+    .suffix-set-zoom-button {
+      display: flex;
+      justify-content: center;
+      justify-items: center;
+      width: 40px;
+      background-color: $white-light-color-transparency;
+      border-radius: 25px;
+    }
+
+    ::ng-deep .mat-form-field-label {
+      color: $mild-green-transparency;
+    }
+
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+      color: $mild-green-transparency;
+    }
+
+    ::ng-deep .mat-form-field-label:hover {
+      color: $mild-green;
+    }
+
+    .center-input-part ~ .center-input-part {
+      margin-left: 4%;
+    }
+
+    .center-input-part {
+      width: 38%;
+
+      .center-input {
+        width: 100%;
+      }
+    }
+  }
+
+  .reset-button-block {
+    width: 100%;
+
+    @media (min-width: 960px) {
+      .zoom-button {
+        width: 40%;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .zoom-button {
+        width: 60%;
+      }
+    }
+
+    .zoom-button {
+      border-radius: 0;
+      border-top-left-radius: 25px;
+      border-bottom-left-radius: 25px;
+      background-color: $white-light-color-transparency;
+      float: right;
+    }
+  }
+
+  .vertical-spacer {
+    flex: 1;
+  }
+
+  .zoom-input-value-part {
+    width: 80%;
+  }
+
+  @media (min-width: 960px) {
+    .zoom-buttons {
+      display: flex;
+      justify-content: center;
+      justify-items: center;
+      flex-direction: row;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .zoom-buttons {
+      display: flex;
+      justify-content: center;
+      justify-items: center;
+      align-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+
+  .zoom-buttons {
+    width: 100%;
+
+    @media (min-width: 960px) {
+      height: 50px;
+    }
+
+    @media (max-width: 960px) {
+      margin-top: 30px;
+      height: 80px;
+    }
+
+    .zoom-button {
+      border-radius: 0;
+      background-color: $white-light-color-transparency;
+      color: $gray-color-shadow;
+      width: 38%;
+      height: 100%;
+
+      @media (min-width: 960px) {
+        .zoom-button-image {
+          height: 100%;
+        }
+      }
+
+      @media (max-width: 960px) {
+        .zoom-button-image {
+          height: 80%;
+        }
+      }
+    }
+
+    @media (min-width: 960px) {
+      .zoom-button-left {
+        border-top-left-radius: 25px;
+        border-bottom-left-radius: 25px;
+      }
+
+      .zoom-button-right {
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .zoom-button-left {
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+      }
+
+      .zoom-button-right {
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+      }
+    }
+  }
+}

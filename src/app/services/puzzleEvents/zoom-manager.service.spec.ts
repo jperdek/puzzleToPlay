@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ZoomMangerService } from './zoom-manger.service';
+import { ZoomManagerService } from './zoom-manager.service';
 
 describe('ZoomMangerService', () => {
-  let service: ZoomMangerService;
+  let service: ZoomManagerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ZoomMangerService);
+    service = TestBed.inject(ZoomManagerService);
   });
 
   it('should be created', () => {

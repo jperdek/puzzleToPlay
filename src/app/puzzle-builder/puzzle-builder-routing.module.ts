@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PuzzleChooserComponent } from './pages/puzzle-chooser/puzzle-chooser.component';
 import { TemplatePreviewComponent } from './pages/template-preview/template-preview.component';
 import { InsertTemplateImageComponent } from './pages/insert-template-image/insert-template-image.component';
+import { ZoomManagementComponent } from './pages/zoom-management/zoom-management.component';
 
 const routes: Routes = [{
   path: '',
@@ -20,6 +21,10 @@ const routes: Routes = [{
 {
   path: 'loadImage',
   component: InsertTemplateImageComponent
+},
+{
+  path: 'zoom',
+  component: ZoomManagementComponent
 }];
 
 @NgModule({

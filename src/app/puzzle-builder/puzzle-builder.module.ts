@@ -13,6 +13,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { PuzzleChooserBottomSheetComponent } from './pages/bottom-sheets/puzzle-chooser-bottom-sheet/puzzle-chooser-bottom-sheet.component';
 import { TemplatePreviewBottomSheetComponent } from './pages/bottom-sheets/template-preview-bottom-sheet/template-preview-bottom-sheet.component';
 import { InsertTemplateImageBottomSheetComponent } from './pages/bottom-sheets/insert-template-image-bottom-sheet/insert-template-image-bottom-sheet.component';
+import { ZoomManagementComponent } from './pages/zoom-management/zoom-management.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ZoomMenuComponent } from '../zoom-menu/zoom-menu.component';
 
 
 @NgModule({
@@ -27,11 +30,15 @@ import { InsertTemplateImageBottomSheetComponent } from './pages/bottom-sheets/i
     PuzzleChooserBottomSheetComponent,
     TemplatePreviewBottomSheetComponent,
     InsertTemplateImageBottomSheetComponent,
+    ZoomManagementComponent,
+    ZoomMenuComponent,
   ],
   imports: [
     CommonModule,
     PuzzleBuilderRoutingModule,
     MaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
     FlexLayoutModule
   ]
 })

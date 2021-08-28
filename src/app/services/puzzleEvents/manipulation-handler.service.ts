@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Point } from 'src/app/models/point';
 import { ExtendedPuzzle } from '../../models/extendedPuzzle';
 import { PuzzleManagerService } from '../puzzleGenerator/puzzle-manager.service';
 
@@ -10,16 +11,18 @@ export class ManipulationHandlerService {
   constructor() { }
 
   public registerCanvasOnManipulationEvents(puzzleBoard: fabric.Canvas, puzzleManagerService: PuzzleManagerService): void {
-    this.processDraggingOnMouseDown(puzzleBoard);
+    this.processDraggingOnMouseDown(puzzleBoard, puzzleManagerService);
     this.processDraggingOnMouseUp(puzzleBoard, puzzleManagerService);
   }
 
-  public processDraggingOnMouseDown(puzzleBoard: fabric.Canvas): void {
+  public processDraggingOnMouseDown(puzzleBoard: fabric.Canvas, puzzleManagerService: PuzzleManagerService): void {
     puzzleBoard.on('mouse:down',  (event: fabric.IEvent) => {
       if (event.target !== null && event.target !== undefined) {
         // saves pozition of cursor on the begining of manipulation
         (event.target as ExtendedPuzzle).dragPointer = event.pointer;
       }
+
+      this.setPositionForZooming(event.pointer, puzzleManagerService);
     });
   }
 
@@ -61,5 +64,14 @@ export class ManipulationHandlerService {
     puzzle.previousCanvasHeight = playBoardHeight;
     puzzleBoard.add(puzzle);
     puzzleBoard.setActiveObject(activeObjects);
+  }
+
+  private setPositionForZooming(cursorPoint: Point | undefined, puzzleManagerService: PuzzleManagerService): void {
+    if (cursorPoint !== undefined) {
+      const zoomManagerService = puzzleManagerService.getZoomManagerService();
+      zoomManagerService.setZoomPosition(cursorPoint.x, cursorPoint.y);
+    } else {
+      console.log('Error: cursor point is undefined! Cant set position for zooming!');
+    }
   }
 }

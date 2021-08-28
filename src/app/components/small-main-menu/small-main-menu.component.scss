@@ -9,7 +9,7 @@
   align-items: center;
   height: 72px;
   padding: 0;
-  color: #808080;
+  color: $gray-color-shadow;
   background-image: url("/assets/designImages/puzzlePanel4.svg");
 
   .small-menu-button {
@@ -17,7 +17,7 @@
     width: 55px;
     margin-top: 5px;
     margin-bottom: 5px;
-    background-color: #ffffff;
+    background-color: $white-light-color;
     border-radius: 0;
     border: 3px solid $mild-green;
 

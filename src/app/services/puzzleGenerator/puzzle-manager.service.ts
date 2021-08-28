@@ -9,7 +9,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ManipulationHandlerService } from '../puzzleEvents/manipulation-handler.service';
 import { Point } from 'src/app/models/point';
 import { ResizeHandlerService } from '../puzzleEvents/resize-handler.service';
-import { ZoomMangerService } from '../puzzleEvents/zoom-manger.service';
+import { ZoomManagerService } from '../puzzleEvents/zoom-manager.service';
 
 
 @Injectable({
@@ -32,7 +32,7 @@ export class PuzzleManagerService {
     private sanitizer: DomSanitizer,
     private manipulationHandlerService: ManipulationHandlerService,
     private resizeHandlerService: ResizeHandlerService,
-    private zoomManager: ZoomMangerService
+    private zoomManagerService: ZoomManagerService
     )
     { this.managePuzzleService.setPuzzleAreaOnBoardService(this.setPuzzleAreaOnBoardService); }
 
@@ -58,7 +58,7 @@ export class PuzzleManagerService {
 
     // register for manipulation events - in case of resizing
     this.manipulationHandlerService.registerCanvasOnManipulationEvents(PuzzleManagerService.puzzleBoard, this);
-    this.zoomManager.registerZoomOnMouseWheel(PuzzleManagerService.puzzleBoard);
+    this.zoomManagerService.registerZoomOnMouseWheel(PuzzleManagerService.puzzleBoard);
     return PuzzleManagerService.puzzleBoard;
   }
 
@@ -139,4 +139,8 @@ export class PuzzleManagerService {
       return { x: 0, y: 0 };
     }
   }
+
+  public getZoomManagerService(): ZoomManagerService { return this.zoomManagerService; }
+
+  public getPuzzleBoard(): fabric.Canvas { return PuzzleManagerService.puzzleBoard; }
 }

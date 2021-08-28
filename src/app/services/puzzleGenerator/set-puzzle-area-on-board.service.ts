@@ -38,9 +38,7 @@ export class SetPuzzleAreaOnBoardService {
     const newBoardTop = this.margin;
     this.createPuzzlePlayableRect(newBoardLeft, newBoardTop, newBoardWidth, newBoardHeight, puzzleBoard);
 
-    console.log(puzzleBoard.getWidth());
     if (puzzleBoard.getWidth() > 790) {
-      console.log('Here');
       this.setDesignImage(puzzleBoard, '/assets/designImages/puzzleBoard3.svg');
     } else {
       this.setDesignImage(puzzleBoard, '/assets/designImages/puzzleBoard2.svg');
