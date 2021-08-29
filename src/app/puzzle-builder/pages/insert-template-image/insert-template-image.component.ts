@@ -48,9 +48,7 @@ export class InsertTemplateImageComponent {
   private getImageContent(file: File): void {
     file.arrayBuffer().then(arrayBuffer => {
       const wholeBase64 = this.imageConversionToBase64(file, arrayBuffer);
-
-      this.puzzleManagerService.clean();
-      this.puzzleManagerService.createHTMLCanvasImage(wholeBase64);
+      this.puzzleManagerService.startGame(wholeBase64);
     });
   }
 

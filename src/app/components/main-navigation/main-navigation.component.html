@@ -19,6 +19,9 @@
             <button class="menu-component-item" color="accent" mat-button [routerLink]="'/puzzle/zoom'">
                 <span>Zoom</span>
             </button>
+            <button class="menu-component-item" color="accent" mat-button [routerLink]="'/puzzle/gallery'">
+                <span>Gallery</span>
+            </button>
         </div>
     </mat-toolbar-row>
 </mat-toolbar>
@@ -40,6 +43,10 @@
             <a [routerLink]="'/puzzle/zoom'" mat-list-item>
                 <mat-icon>load</mat-icon>
                 <span>Zoom</span>
+            </a>
+            <a [routerLink]="'/puzzle/gallery'" mat-list-item>
+                <mat-icon>load</mat-icon>
+                <span>Gallery</span>
             </a>
             <div class="vertical-spacer"></div>
             <mat-slide-toggle class="zoom-toggles" (change)="toggleZoom($event)" >Show / hide zoom</mat-slide-toggle>

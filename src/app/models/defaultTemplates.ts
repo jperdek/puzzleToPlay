@@ -1,4 +1,10 @@
+export interface TemplateCategory {
+    name: string;
+    images: TemplateImage[];
+}
+
 export interface TemplateImage {
-    title: string,
-    src: string,
+    title: string;
+    quality: string;
+    src: string;
 }

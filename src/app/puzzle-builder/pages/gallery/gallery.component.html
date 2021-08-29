@@ -1,0 +1,30 @@
+<div class="gallery-block">
+    <h1 class="main-heading">Gallery</h1>
+
+    <div class="gallery-wrapper-block">
+        <mat-accordion [multi]="true">
+            <mat-expansion-panel *ngFor="let templateCategory of (getGallery() | async); let i = index;">
+                <mat-expansion-panel-header class="category-label-header">  
+                    <mat-panel-title class="category-label">
+                        {{ templateCategory.name }}
+                    </mat-panel-title>
+                    <mat-panel-description>    
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-card *ngFor="let image of templateCategory.images" class="gallery-image">
+                    <mat-card-header class="card-header">
+                        <mat-card-title class="card-title">{{image.title}}</mat-card-title>
+                        <mat-card-subtitle class="card-subtitle">{{image.quality}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image [src]="image.src" alt="Photo of a {{image.title}}" class="gallery-image-img"/>
+                    <mat-card-content>
+                    </mat-card-content>
+                    <mat-card-actions class="card-action-block">
+                        <button mat-raised-button color="accent" class="playable-button" (click)="startNewGame(image);">Play!</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
+

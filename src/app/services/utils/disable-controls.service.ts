@@ -16,7 +16,7 @@ export class DisableControlsService {
     });
   }
 
-  public removeScalingOptionsForGroup(): void {
+  public removeScalingOptionsForGroups(): void {
     fabric.Group.prototype.lockScalingX = true;
     fabric.Group.prototype.lockScalingY = true;
 

@@ -16,6 +16,7 @@ import { InsertTemplateImageBottomSheetComponent } from './pages/bottom-sheets/i
 import { ZoomManagementComponent } from './pages/zoom-management/zoom-management.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ZoomMenuComponent } from './components/zoom-menu/zoom-menu.component';
+import { GalleryComponent } from './pages/gallery/gallery.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { ZoomMenuComponent } from './components/zoom-menu/zoom-menu.component';
     InsertTemplateImageBottomSheetComponent,
     ZoomManagementComponent,
     ZoomMenuComponent,
+    GalleryComponent,
   ],
   imports: [
     CommonModule,

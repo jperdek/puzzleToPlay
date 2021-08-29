@@ -45,7 +45,7 @@ export class PuzzleManagerService {
     } else {
       console.log('Error: canvas wrapper element not found - cant initialize canvas!');
     }
-    this.createHTMLCanvasImage();
+    this.startGame();
   }
 
   public createCanvas(width = 900, height = 560, fabricCanvasId = PuzzleManagerService.fabricCanvasId): fabric.Canvas {
@@ -60,9 +60,21 @@ export class PuzzleManagerService {
     // register for manipulation events - in case of resizing
     this.manipulationHandlerService.registerCanvasOnManipulationEvents(PuzzleManagerService.puzzleBoard, this);
     this.zoomManagerService.registerZoomOnMouseWheel(PuzzleManagerService.puzzleBoard);
-    this.disableControlsService.removeScalingOptionsForGroup();
+    this.disableControlsService.removeScalingOptionsForGroups();
     return PuzzleManagerService.puzzleBoard;
   }
+
+
+  public startGame(puzzleImagePath = 'assets/test1.jpg',
+                   nativeCanvasId = PuzzleManagerService.nativeCanvasId,
+                   randomAngle = true): void {
+    this.clean();
+    // prepare preview image
+    PuzzleManagerService.templatePreviewImage = this.sanitizer.bypassSecurityTrustResourceUrl(puzzleImagePath);
+
+    this.createHTMLCanvasImage(puzzleImagePath, nativeCanvasId, randomAngle);
+  }
+
 
   public createHTMLCanvasImage(puzzleImagePath = 'assets/test1.jpg',
                                nativeCanvasId = PuzzleManagerService.nativeCanvasId,
@@ -73,9 +85,6 @@ export class PuzzleManagerService {
     const baseImage = new Image();
     baseImage.src = puzzleImagePath;
 
-    // prepare preview image
-    PuzzleManagerService.templatePreviewImage = this.sanitizer.bypassSecurityTrustResourceUrl(puzzleImagePath);
-
     baseImage.onload = () => {
       if (context !== null) {
         context.drawImage(baseImage, 0, 0);
@@ -85,11 +94,16 @@ export class PuzzleManagerService {
         context.drawImage(baseImage, 0, 0);
       }
 
-      this.baseImageAspectRatio = baseImage.width / baseImage.height;
-      this.resizeHandlerService.registerResizeHandler(PuzzleManagerService.puzzleBoard,
+      this.startGameInitializationFunction(baseImage, canvas, randomAngle);
+    };
+  }
+
+  public startGameInitializationFunction(baseImage: HTMLImageElement, canvas: HTMLCanvasElement, randomAngle = true): void {
+    this.baseImageAspectRatio = baseImage.width / baseImage.height;
+    this.resizeHandlerService.registerResizeHandler(PuzzleManagerService.puzzleBoard,
         this.setPuzzleAreaOnBoardService, this.baseImageAspectRatio, 'puzzleBoardWrapper');
 
-      if (PuzzleManagerService.puzzleBoard !== undefined &&
+    if (PuzzleManagerService.puzzleBoard !== undefined &&
         PuzzleManagerService.puzzleBoard.width !== undefined && PuzzleManagerService.puzzleBoard.height !== undefined) {
           const interBoardSize = this.imageSizeManagerService.getSizeAccordingAspectRatio(
             this.setPuzzleAreaOnBoardService.getPlayableWidth(PuzzleManagerService.puzzleBoard.width),
@@ -102,9 +116,7 @@ export class PuzzleManagerService {
       } else {
         console.log('Error: board canvas not exists or its size is not included!');
       }
-    };
   }
-
   public addPuzzleToBoard(puzzle: Puzzle): void {
     if (PuzzleManagerService.puzzleBoard.width !== undefined && PuzzleManagerService.puzzleBoard.height !== undefined) {
       const interBoardSize = this.imageSizeManagerService.getSizeAccordingAspectRatio(

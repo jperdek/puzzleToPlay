@@ -5,6 +5,7 @@ import { PuzzleChooserComponent } from './pages/puzzle-chooser/puzzle-chooser.co
 import { TemplatePreviewComponent } from './pages/template-preview/template-preview.component';
 import { InsertTemplateImageComponent } from './pages/insert-template-image/insert-template-image.component';
 import { ZoomManagementComponent } from './pages/zoom-management/zoom-management.component';
+import { GalleryComponent } from './pages/gallery/gallery.component';
 
 const routes: Routes = [{
   path: '',
@@ -25,6 +26,10 @@ const routes: Routes = [{
 {
   path: 'zoom',
   component: ZoomManagementComponent
+},
+{
+  path: 'gallery',
+  component: GalleryComponent
 }];
 
 @NgModule({
