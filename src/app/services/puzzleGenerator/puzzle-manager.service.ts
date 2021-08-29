@@ -10,6 +10,7 @@ import { ManipulationHandlerService } from '../puzzleEvents/manipulation-handler
 import { Point } from 'src/app/models/point';
 import { ResizeHandlerService } from '../puzzleEvents/resize-handler.service';
 import { ZoomManagerService } from '../puzzleEvents/zoom-manager.service';
+import { DisableControlsService } from '../utils/disable-controls.service';
 
 
 @Injectable({
@@ -32,7 +33,8 @@ export class PuzzleManagerService {
     private sanitizer: DomSanitizer,
     private manipulationHandlerService: ManipulationHandlerService,
     private resizeHandlerService: ResizeHandlerService,
-    private zoomManagerService: ZoomManagerService
+    private zoomManagerService: ZoomManagerService,
+    private disableControlsService: DisableControlsService
     )
     { this.managePuzzleService.setPuzzleAreaOnBoardService(this.setPuzzleAreaOnBoardService); }
 
@@ -58,6 +60,7 @@ export class PuzzleManagerService {
     // register for manipulation events - in case of resizing
     this.manipulationHandlerService.registerCanvasOnManipulationEvents(PuzzleManagerService.puzzleBoard, this);
     this.zoomManagerService.registerZoomOnMouseWheel(PuzzleManagerService.puzzleBoard);
+    this.disableControlsService.removeScalingOptionsForGroup();
     return PuzzleManagerService.puzzleBoard;
   }
 

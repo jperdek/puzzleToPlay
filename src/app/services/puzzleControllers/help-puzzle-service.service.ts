@@ -34,6 +34,5 @@ export class HelpPuzzleServiceService {
       }
       return true;
     };
-
   }
 }

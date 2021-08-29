@@ -4,6 +4,8 @@ import { ScanLineService } from './scan-line.service';
 import { DrawAdjacentPointsService } from './draw-adjacent-points.service';
 import { Polygon } from 'src/app/models/polygon';
 import { Puzzle } from 'src/app/store/puzzles/puzzles';
+import { DisableControlsService } from '../utils/disable-controls.service';
+import { RandomUtilsService } from '../utils/random-utils.service';
 
 
 
@@ -12,7 +14,9 @@ import { Puzzle } from 'src/app/store/puzzles/puzzles';
 })
 export class DrawBordersService {
 
-  constructor(private drawAdjacentPointService: DrawAdjacentPointsService) { }
+  constructor(
+    private drawAdjacentPointService: DrawAdjacentPointsService,
+    private disableControlsService: DisableControlsService) { }
 
   private createHTMLCanvas(width: number, height: number): HTMLCanvasElement {
     const newCanvas = document.createElement('canvas');
@@ -81,15 +85,7 @@ export class DrawBordersService {
     return null;
   }
 
-  private removeScalingOptions(img: fabric.Image): void {
-    img.lockScalingX = true;
-    img.lockScalingY = true;
-    img.setControlsVisibility({
-      mt: false, mb: false, ml: false, mr: false,
-      tl: false, tr: false, bl: false, br: false
-    });
-  }
-
+  // used method only to add image - for rotating images must be extended like similar method in drawBordersService
   public putCreatedImage(
     imageData: ImageData,
     width: number, height: number,
@@ -102,17 +98,12 @@ export class DrawBordersService {
     fabric.Image.fromURL(newCanvas.toDataURL(), (img) => {
         img.left = 0;
         img.top = 0;
-        // img.setAngle(this.randomInteger(0, 360));
-        this.removeScalingOptions(img);
+        this.disableControlsService.removeScalingOptions(img);
         img.scaleToWidth((width / imageCanvasWidth) * boardCanvasWidth);
         img.scaleToHeight((height / imageCanvasHeight) * boardCanvasHeight);
         canvas.add(img);
         img.bringToFront();
     });
-  }
-
-  public randomInteger(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   public degreesToRadians(degrees: number): number {return degrees * (Math.PI / 180.0); }
@@ -129,7 +120,7 @@ export class DrawBordersService {
 
     let rotateAngle;
     if (randomAngle) {
-      rotateAngle = this.randomInteger(0, 360); // random angle
+      rotateAngle = RandomUtilsService.randomNumber(0, 360); // random angle
     } else {
       rotateAngle = 0;
     }
@@ -179,91 +170,91 @@ export class DrawBordersService {
     width: number, height: number,
     leftOffset: number = 0, rightOffset: number = 0): Map<number, ScanLineService> {
 
-  const minX = leftOffset;
-  const maxX = leftOffset + width - 1;
-  const minY = rightOffset;
-  const maxY = rightOffset + height - 1;
+    const minX = leftOffset;
+    const maxX = leftOffset + width - 1;
+    const minY = rightOffset;
+    const maxY = rightOffset + height - 1;
 
-  const numberVertices = polygon.points.length;
-  let vector1;
-  let vector2;
-  let temporaryVector;
-  let startY;
-  let endY;
-  let dx;
-  let dy;
-  let gradient;
-  let x;
-  let y;
-  let top;
-  let bottom;
+    const numberVertices = polygon.points.length;
+    let vector1;
+    let vector2;
+    let temporaryVector;
+    let startY;
+    let endY;
+    let dx;
+    let dy;
+    let gradient;
+    let x;
+    let y;
+    let top;
+    let bottom;
 
-  const scans = new Map<number, ScanLineService>();
+    const scans = new Map<number, ScanLineService>();
 
-  for (let i = 0; i < numberVertices; i++){
-    vector1 = polygon.points[i];
+    for (let i = 0; i < numberVertices; i++){
+      vector1 = polygon.points[i];
 
-    if (i === numberVertices - 1){
-      vector2 = polygon.points[0];
-    } else {
-      vector2 = polygon.points[i + 1];
-    }
-
-    if (vector1.y > vector2.y){
-      temporaryVector = vector1;
-      vector1 = vector2;
-      vector2 = temporaryVector;
-    }
-
-    dy = vector2.y - vector1.y;
-
-    if (dy === 0) { continue; }
-
-    top = startY = Math.max(Math.ceil(vector1.y), minY);
-    bottom = endY = Math.min(Math.ceil(vector2.y) - 1, maxY);
-
-
-    dx = vector2.x - vector1.x;
-
-    gradient = dx / dy;
-
-    for (y = startY; y <= endY; y++){
-      x = Math.ceil(vector1.x + (y - vector1.y) * gradient);
-      x = Math.min(maxX + 1, Math.max(x, minX));
-      if (!scans.has(y)){
-        scans.set(y, new ScanLineService());
-      }
-      scans.get(y)?.setBoundary(x);
-    }
-  }
-
-  return scans;
-}
-
-public drawPolygonFromScans(scans: Map<number, ScanLineService>, imageData: ImageData, top: number, bottom: number, width: number): void{
-  if (scans !== null && scans !== undefined){
-    let y = top;
-    let yBuffer;
-    let xBufferStart;
-    let xBufferEnd;
-    let scan;
-
-    while (y <= bottom){
-      scan = scans.get(y);
-      yBuffer = y * (width * 4);
-      if (scan !== undefined && scan.isValid()){
-        xBufferStart = scan.left * 4;
-        xBufferEnd = scan.right * 4;
-        this.fillOutside(imageData, yBuffer, xBufferStart, xBufferEnd, width * 4);
-        // this.fillInside(imageData, yBuffer, xBufferStart, xBufferEnd);
+      if (i === numberVertices - 1){
+        vector2 = polygon.points[0];
       } else {
-        // outside area should be erased too - in full range
-        this.fillOutside(imageData, yBuffer, width * 4, 0, width * 4);
+        vector2 = polygon.points[i + 1];
       }
-      y = y + 1;
+
+      if (vector1.y > vector2.y){
+        temporaryVector = vector1;
+        vector1 = vector2;
+        vector2 = temporaryVector;
+      }
+
+      dy = vector2.y - vector1.y;
+
+      if (dy === 0) { continue; }
+
+      top = startY = Math.max(Math.ceil(vector1.y), minY);
+      bottom = endY = Math.min(Math.ceil(vector2.y) - 1, maxY);
+
+
+      dx = vector2.x - vector1.x;
+
+      gradient = dx / dy;
+
+      for (y = startY; y <= endY; y++){
+        x = Math.ceil(vector1.x + (y - vector1.y) * gradient);
+        x = Math.min(maxX + 1, Math.max(x, minX));
+        if (!scans.has(y)){
+          scans.set(y, new ScanLineService());
+        }
+        scans.get(y)?.setBoundary(x);
+      }
+    }
+
+    return scans;
+  }
+
+  public drawPolygonFromScans(scans: Map<number, ScanLineService>, imageData: ImageData, top: number, bottom: number, width: number): void{
+    if (scans !== null && scans !== undefined){
+      let y = top;
+      let yBuffer;
+      let xBufferStart;
+      let xBufferEnd;
+      let scan;
+
+      while (y <= bottom){
+        scan = scans.get(y);
+        yBuffer = y * (width * 4);
+        if (scan !== undefined && scan.isValid()){
+          xBufferStart = scan.left * 4;
+          xBufferEnd = scan.right * 4;
+          this.fillOutside(imageData, yBuffer, xBufferStart, xBufferEnd, width * 4);
+          // this.fillInside(imageData, yBuffer, xBufferStart, xBufferEnd);
+        } else {
+          // outside area should be erased too - in full range
+          this.fillOutside(imageData, yBuffer, width * 4, 0, width * 4);
+        }
+        y = y + 1;
+      }
     }
   }
-}
 
   public fillInside(imageData: ImageData, yBuffer: number, xBufferStart: number, xBufferEnd: number): void {
     for (let i = xBufferStart; i < xBufferEnd; i += 4) {

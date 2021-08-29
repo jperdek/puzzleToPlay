@@ -9,6 +9,7 @@ import { addPuzzles } from 'src/app/store/puzzles/puzzles.actions';
 import { Connection, Polygon } from 'src/app/models/polygon';
 import { Point } from 'src/app/models/point';
 import { ShufflePuzzlesService } from '../utils/shuffle-puzzles.service';
+import { RandomUtilsService } from '../utils/random-utils.service';
 
 @Injectable({
   providedIn: 'root'
@@ -266,10 +267,6 @@ export class PuzzleGeneratorQuadroService {
     return polygons;
   }
 
-  public randomNumber(min: number, max: number): number {
-    return Math.random() * (max - min) + min;
-  }
-
   public createPointMap(width: number, height: number): Point[][] {
     const pointMap: Point[][] = [];
     const numberRows = Math.floor(height / this.maxSquareSizeHeight) + 1;
@@ -302,14 +299,14 @@ export class PuzzleGeneratorQuadroService {
 
         // generates random number except from beginning column
         if (initialValueColumn !== 0) {
-          randomColumn = this.randomNumber(0, this.maxPointRangeRow);
+          randomColumn = RandomUtilsService.randomNumber(0, this.maxPointRangeRow);
         } else {
           randomColumn = initialValueColumn;
         }
 
         // generates random number except begining row
         if (j !== 0) {
-          randomRow = this.randomNumber(0, this.maxPointRangeRow);
+          randomRow = RandomUtilsService.randomNumber(0, this.maxPointRangeRow);
         } else {
           randomRow = 0;
         }

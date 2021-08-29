@@ -8,8 +8,6 @@ import { PuzzleManagerService } from '../puzzleGenerator/puzzle-manager.service'
 })
 export class ManipulationHandlerService {
 
-  constructor() { }
-
   public registerCanvasOnManipulationEvents(puzzleBoard: fabric.Canvas, puzzleManagerService: PuzzleManagerService): void {
     this.processDraggingOnMouseDown(puzzleBoard, puzzleManagerService);
     this.processDraggingOnMouseUp(puzzleBoard, puzzleManagerService);

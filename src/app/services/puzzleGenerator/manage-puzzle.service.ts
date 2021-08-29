@@ -6,6 +6,7 @@ import { PuzzleAppState } from 'src/app/store';
 import { Puzzle } from 'src/app/store/puzzles/puzzles';
 import { addPuzzle, returnPuzzle, returnPuzzles } from 'src/app/store/puzzles/puzzles.actions';
 import { PuzzleControllerManagerService } from '../puzzleControllers/puzzle-controller-manager.service';
+import { DisableControlsService } from '../utils/disable-controls.service';
 import { SetPuzzleAreaOnBoardService } from './set-puzzle-area-on-board.service';
 
 
@@ -20,7 +21,8 @@ export class ManagePuzzleService {
 
   constructor(
     private store: Store<PuzzleAppState>,
-    private puzzleControllerManagerService: PuzzleControllerManagerService) { }
+    private puzzleControllerManagerService: PuzzleControllerManagerService,
+    private disableControlsService: DisableControlsService) { }
 
   public setPuzzleAreaOnBoardService(setPuzzleAreaOnBoardService: SetPuzzleAreaOnBoardService): void {
     this.puzzleAreaOnBoardService = setPuzzleAreaOnBoardService;
@@ -41,15 +43,6 @@ export class ManagePuzzleService {
     this.store.dispatch(returnPuzzle({ id: puzzleId }));
   }
 
-  private removeScalingOptions(img: fabric.Image): void {
-    img.lockScalingX = true;
-    img.lockScalingY = true;
-    img.setControlsVisibility({
-      mt: false, mb: false, ml: false, mr: false,
-      tl: false, tr: false, bl: false, br: false
-    });
-  }
-
   private putCreatedImage(puzzle: Puzzle, boardCanvas: fabric.Canvas,
                           boardCanvasWidth: number, boardCanvasHeight: number): void {
     fabric.Image.fromURL(puzzle.puzzleImageSrc, (img) => {
@@ -64,7 +57,7 @@ export class ManagePuzzleService {
             image.scaleToHeight((group.height / puzzle.imageCanvasHeight) * boardCanvasHeight);
           }
           (image as ExtendedPuzzle).puzzleData = puzzle;
-          this.removeScalingOptions(image);
+          this.disableControlsService.removeScalingOptions(image);
           this.setForResize(image as ExtendedPuzzle, boardCanvasWidth, boardCanvasHeight);
           this.puzzleControllerManagerService.registerControllers(this);
           boardCanvas.add(image);               // puts image - puzzle - to canvas
@@ -83,7 +76,7 @@ export class ManagePuzzleService {
       img.top = 25;
       img.scaleToWidth((puzzle.width / puzzle.imageCanvasWidth) * boardCanvasWidth);
       img.scaleToHeight((puzzle.height / puzzle.imageCanvasHeight) * boardCanvasHeight);
-      this.removeScalingOptions(img);
+      this.disableControlsService.removeScalingOptions(img);
       this.setForResize(img as ExtendedPuzzle, boardCanvasWidth, boardCanvasHeight);
       this.puzzleControllerManagerService.registerControllers(this);
 
