@@ -14,7 +14,7 @@ Angular puzzle game which provides environment for playing puzzles, testing and 
 - rotation of puzzle / puzzles - user can rotate puzzles
 - shuffle of puzzles
 - initial rotation of puzzles - user will get rotated puzzles and rotation to previous state is neccessary
-- ngrx reactive manipulation - not used puzzled are in separated drawer
+- ngrx reactive manipulation - not used puzzles are in separated drawer
 - puzzles can be returned to drawer
 - hint for position of given puzzle can be provided
 - puzzles can be send to back or bring to front
