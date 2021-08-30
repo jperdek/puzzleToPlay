@@ -3,7 +3,7 @@
 Generate and play puzzle in simulation of real puzzle game! You can move, rotate puzzles and zoom to certain point of puzzle board.
 We provides responsiveness which enables using several types of devices during play.
 In addition you can use hints to build puzzle faster. Application provides basic puzzle algorithm, but another puzzle generation strategies can be also implemented and tested using this environment.
-Angular puzzle game which provides environment for playing puzzles, testing and improving puzzle generation algorithms.
+Angular puzzle game which provides environment for playing puzzles, testing and improving puzzle generator algorithms.
 
 
 ## Environment provide:
@@ -23,15 +23,15 @@ Angular puzzle game which provides environment for playing puzzles, testing and 
 ### Puzzle board management:
 - responsiveness during playing
 - possibility of zooming in and out from given area
-- highlighted area fits to given image - which we are buiding from puzzles
+- highlighted area fits to given image - which we are building from puzzles
 - enough space to put puzzles on board - zoom can help, but canvas is as large as possible
 
 
 ### Puzzle game management:
 - prepared gallery for playing
 - preview of image is included
-- advanced zooming settings
-- responisveness - suitability for smaller devices
+- advanced zooming settings are prepared
+- responsiveness - suitability for smaller devices
 
 
 ### Other features
@@ -39,13 +39,14 @@ Angular puzzle game which provides environment for playing puzzles, testing and 
 - clean code compatible with ng lint - using ng lint as often as possible
 - configurable styles because of using scss
 - code separated in services, divided into directories for components and pages
-- loading of pictures - tested picture sized were up to 3MB (maybe larger are possible too) - depends on used technology
+- loading of pictures - tested picture size were up to 3MB (maybe larger are possible too) - depends on used technology
 
 
 ## Improvements
 - better puzzle generator algorithms
 - UI for each puzzle generator algorithm with configurable parameters
 - saving of puzzle / game state
+- posibility to download all puzzles as images
 
 
 ## Development server
