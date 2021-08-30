@@ -1,0 +1,5 @@
+.insert-image-bottom-sheet {
+  ::ng-deep .mat-bottom-sheet-container {
+    overflow: hidden;
+  }
+}

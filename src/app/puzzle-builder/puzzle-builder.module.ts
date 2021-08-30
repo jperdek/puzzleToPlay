@@ -18,6 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ZoomMenuComponent } from './components/zoom-menu/zoom-menu.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
 import { DragAndDropImageComponent } from './components/drag-and-drop-image/drag-and-drop-image.component';
+import { GalleryBottomSheetComponent } from './pages/bottom-sheets/gallery-bottom-sheet/gallery-bottom-sheet.component';
+import { ZoomManagementBottomSheetComponent } from './pages/bottom-sheets/zoom-management-bottom-sheet/zoom-management-bottom-sheet.component';
 
 
 @NgModule({
@@ -36,6 +38,8 @@ import { DragAndDropImageComponent } from './components/drag-and-drop-image/drag
     ZoomMenuComponent,
     GalleryComponent,
     DragAndDropImageComponent,
+    GalleryBottomSheetComponent,
+    ZoomManagementBottomSheetComponent,
   ],
   imports: [
     CommonModule,

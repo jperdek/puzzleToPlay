@@ -1,3 +1,5 @@
+@import "../../styles/text-settings.scss";
+
 .menu-spacer {
   flex: 1 1 auto;
 }
@@ -47,5 +49,26 @@
 @media (min-width: 600px) {
   .zoom-toggles {
     display: none;
+  }
+}
+
+.menu-text {
+  @include text-menu-heading;
+}
+
+.main-menu-text {
+  @include main-menu-title-heading;
+  margin-left: 32px;
+}
+
+@media (max-width: 1056px) {
+  .main-menu-text {
+    width: 100%;
+  }
+}
+
+@media (min-width: 960px) {
+  .main-menu-text {
+    width: auto;
   }
 }

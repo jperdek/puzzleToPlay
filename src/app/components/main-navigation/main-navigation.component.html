@@ -4,23 +4,23 @@
         <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
             <mat-icon>menu</mat-icon>
         </button>
-        <span>Puzzle to play</span>
+        <span class="main-menu-text">Puzzle to play</span>
         <span class="menu-spacer"></span>
         <div fxShow="true" fxHide.lt-md>
             <button class="menu-component-item" color="accent" mat-button [routerLink]="'/puzzle/loadImage'">
-                <span>Load image</span>
+                <span class="menu-text">Load image</span>
             </button>
             <button class="menu-component-item" color="accent" mat-button [routerLink]="'/puzzle/selectPuzzles'">
-                <span>Play</span>
+                <span class="menu-text">Play</span>
             </button>
             <button class="menu-component-item" color="accent" mat-button [routerLink]="'/puzzle/preview'">
-                <span>Preview</span>
+                <span class="menu-text">Preview</span>
             </button>
             <button class="menu-component-item" color="accent" mat-button [routerLink]="'/puzzle/zoom'">
-                <span>Zoom</span>
+                <span class="menu-text">Zoom</span>
             </button>
             <button class="menu-component-item" color="accent" mat-button [routerLink]="'/puzzle/gallery'">
-                <span>Gallery</span>
+                <span class="menu-text">Gallery</span>
             </button>
         </div>
     </mat-toolbar-row>
@@ -28,26 +28,48 @@
 <mat-sidenav-container fxFlexFill class="sidenav-block" fxHide.gt-sm>
     <mat-sidenav #sidenav>
         <mat-nav-list class="main-menu-navlist">
-            <a [routerLink]="'/puzzle/loadImage'" mat-list-item>
+            <a [routerLink]="'/puzzle/loadImage'" mat-list-item fxHide.lt-sm>
                 <mat-icon>load</mat-icon>
-                <span>Load image</span>
+                <span class="menu-text-small">Load image</span>
             </a>
-            <a [routerLink]="'/puzzle/selectPuzzles'" mat-list-item>
+            <a [routerLink]="'/puzzle/selectPuzzles'" mat-list-item fxHide.lt-sm>
                 <mat-icon>load</mat-icon>
-                <span>Play</span>
+                <span class="menu-text-small">Play</span>
             </a>
-            <a [routerLink]="'/puzzle/preview'" mat-list-item>
+            <a [routerLink]="'/puzzle/preview'" mat-list-item fxHide.lt-sm>
                 <mat-icon>load</mat-icon>
-                <span>Preview</span>
+                <span class="menu-text-small">Preview</span>
             </a>
-            <a [routerLink]="'/puzzle/zoom'" mat-list-item>
+            <a [routerLink]="'/puzzle/zoom'" mat-list-item fxHide.lt-sm>
                 <mat-icon>load</mat-icon>
-                <span>Zoom</span>
+                <span class="menu-text-small">Zoom</span>
             </a>
-            <a [routerLink]="'/puzzle/gallery'" mat-list-item>
+            <a [routerLink]="'/puzzle/gallery'" mat-list-item fxHide.lt-sm> 
                 <mat-icon>load</mat-icon>
-                <span>Gallery</span>
+                <span class="menu-text-small">Gallery</span>
             </a>
+
+            <a (click)="openInsertTemplateImageBottomSheet()" mat-list-item fxHide.gt-xs>
+                <mat-icon>load</mat-icon>
+                <span class="menu-text-small">Load image</span>
+            </a>
+            <a (click)="openPuzzleChooserBottomSheet()" mat-list-item fxHide.gt-xs>
+                <mat-icon>load</mat-icon>
+                <span class="menu-text-small">Play</span>
+            </a>
+            <a (click)="openTemplatePreviewBottomSheet()" mat-list-item fxHide.gt-xs>
+                <mat-icon>load</mat-icon>
+                <span class="menu-text-small">Preview</span>
+            </a>
+            <a (click)="openZoomManagementBottomSheet()" mat-list-item fxHide.gt-xs>
+                <mat-icon>load</mat-icon>
+                <span class="menu-text-small">Zoom</span>
+            </a>
+            <a (click)="openGalleryBottomSheet()" mat-list-item fxHide.gt-xs> 
+                <mat-icon>load</mat-icon>
+                <span class="menu-text-small">Gallery</span>
+            </a>
+
             <div class="vertical-spacer"></div>
             <mat-slide-toggle class="zoom-toggles" (change)="toggleZoom($event)" >Show / hide zoom</mat-slide-toggle>
         </mat-nav-list>
