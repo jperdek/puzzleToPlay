@@ -1,4 +1,4 @@
-# PuzzleToPlay
+# Puzzle To Play
 
 Generate and play puzzle in simulation of real puzzle game! You can move, rotate puzzles and zoom to certain point of puzzle board.
 We provides responsiveness which enables using several types of devices during play.
@@ -56,3 +56,6 @@ Use npm start in root directory and navigate to http://localhost:4200/ or http:/
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 
+## Keywords
+
+puzzle, puzzles, puzzle generator, algorithm, game, responsive game, interactive game, fabric, canvas game
