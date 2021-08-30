@@ -21,6 +21,7 @@ export class InitialPageComponent {
   }
 
   public createPuzzleForImage(slide: TemplateImage): void {
+    console.log('HEre');
     this.router.navigateByUrl('/puzzle/selectPuzzles');
     // its in another module which needs to be loaded first
     setTimeout(() => this.puzzleManagerService.startGame(slide.src), 700);

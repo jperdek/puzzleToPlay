@@ -1,0 +1,18 @@
+<div class="drop-puzzle-block" appDragAndDrop (fileDropped)="onDroppedPuzzleImage($event)">
+    <div class="drop-puzzle-image">
+        <input class="drop-puzzle-file"
+            type="file"
+            id="puzzleImage"
+            name="puzzleImage[]"
+            (change)="puzzleImageFileInput($event.target)"/>
+        <label for="puzzleImage" class="file-label-block"> 
+            <img class="upload-image" src="/assets/icons/add-image.svg" alt="upload image"/>
+            <div class="upload-image-text">
+                Upload your own image and generate puzzle.
+            </div>
+        </label>
+    </div>
+    <div class="uploading-puzzle">Uploading puzzle image…</div>
+    <div class="success-puzzle">Puzzle image loading is done!</div>
+    <div class="error-puzzle">Error during loading puzzle image! <span></span>.</div>
+</div>

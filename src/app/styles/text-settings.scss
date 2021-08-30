@@ -35,8 +35,15 @@
 
 @mixin text-subheading {
   font-size: 12px;
-  color: $light-text-color;
   font-family: "prompt";
   color: $main-heading-text-color;
   text-decoration: none;
+}
+
+@mixin intro-text {
+  font-size: 20px;
+  color: $main-heading-text-color;
+  font-family: "prompt";
+  text-decoration: none;
+  line-height: 25px;
 }

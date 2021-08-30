@@ -17,6 +17,7 @@ import { ZoomManagementComponent } from './pages/zoom-management/zoom-management
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ZoomMenuComponent } from './components/zoom-menu/zoom-menu.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
+import { DragAndDropImageComponent } from './components/drag-and-drop-image/drag-and-drop-image.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { GalleryComponent } from './pages/gallery/gallery.component';
     ZoomManagementComponent,
     ZoomMenuComponent,
     GalleryComponent,
+    DragAndDropImageComponent,
   ],
   imports: [
     CommonModule,

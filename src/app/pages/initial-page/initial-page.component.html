@@ -5,20 +5,52 @@
     <div class="gallery-and-loader">
         <div class="puzzle-info-part">
             <div class="info-part">
-                
+                Generate and play puzzle in simulation of real puzzle game! You can move, rotate puzzles and zoom to certain 
+                point of puzzle board.
+                We provides responsiveness which enables usingseveral types of devices during play.
+                In addition you can use hints to build puzzle faster. Application provides basic puzzle algorithm,
+                but another puzzle generation strategies can be also implemented and tested using this environment.
             </div>
         </div>
         <div class="gallery-part">
+            <h1 class="main-heading">Choose image from gallery!</h1>
             <mat-carousel timings="250ms ease-in" [autoplay]="true" color="accent" maxWidth="auto" [loop]="true" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="true" [useMouseWheel]="false"
-                orientation="ltr"[proportion]="100">
+                orientation="ltr"[proportion]="80" class="carousel-part">
 
-                <mat-carousel-slide #matCarouselSlide *ngFor="let slide of (getSlides() | async); let i = index" [image]="slide.src"
+                <mat-carousel-slide #matCarouselSlide1 *ngFor="let slide of (getSlides() | async); let i = index" [image]="slide.src"
                     overlayColor="#00000040" [hideOverlay]="false" slideHeight="25vh">
                     <div class="whole-slide" (click)="createPuzzleForImage(slide)"></div>
                 </mat-carousel-slide>
             </mat-carousel>
         </div>
         <div class="image-loader">
+            <app-insert-template-image></app-insert-template-image>
+        </div>
+    </div>
+    <div class="middle-view">
+        <h1 class="main-heading">Choose image from gallery!</h1>
+        <mat-carousel timings="250ms ease-in" [autoplay]="true" color="accent" maxWidth="auto" [loop]="true" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="true" [useMouseWheel]="false"
+            orientation="ltr"[proportion]="60" class="carousel-part">
+
+            <mat-carousel-slide #matCarouselSlide2 *ngFor="let slide of (getSlides() | async); let i = index" [image]="slide.src"
+                overlayColor="#00000040" [hideOverlay]="false" slideHeight="25vh">
+                <div class="whole-slide" (click)="createPuzzleForImage(slide)"></div>
+            </mat-carousel-slide>
+        </mat-carousel>
+    </div>
+    <div class="smaller-devices">
+        <div class="gallery-part-small">
+            <h1 class="main-heading">Choose image from gallery!</h1>
+            <mat-carousel timings="250ms ease-in" [autoplay]="true" color="accent" maxWidth="auto" [loop]="true" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="true" [useMouseWheel]="false"
+                orientation="ltr"[proportion]="80" class="carousel-part">
+
+                <mat-carousel-slide #matCarouselSlide3 *ngFor="let slide of (getSlides() | async); let i = index" [image]="slide.src"
+                    overlayColor="#00000040" [hideOverlay]="false" slideHeight="25vh">
+                    <div class="whole-slide" (click)="createPuzzleForImage(slide)"></div>
+                </mat-carousel-slide>
+            </mat-carousel>
+        </div>
+        <div class="image-loader-small">
             <app-insert-template-image></app-insert-template-image>
         </div>
     </div>
