@@ -1,4 +1,5 @@
 import { Component} from '@angular/core';
+import { Router } from '@angular/router';
 import { PuzzleManagerService } from 'src/app/services/puzzleGenerator/puzzle-manager.service';
 
 @Component({
@@ -8,9 +9,15 @@ import { PuzzleManagerService } from 'src/app/services/puzzleGenerator/puzzle-ma
 })
 export class InsertTemplateImageComponent {
 
-  constructor(private puzzleManagerService: PuzzleManagerService) { }
+  constructor(
+    private puzzleManagerService: PuzzleManagerService,
+    private router: Router) { }
 
   public onDroppedPuzzleImage(files: FileList): void {
+    if (this.loadingFromOtherModuleFix(Array.from(files))) {
+      return;
+    }
+
     if (files !== null) {
       this.getOnlyOneFile(Array.from(files));
     } else {
@@ -18,7 +25,20 @@ export class InsertTemplateImageComponent {
     }
   }
 
+  public loadingFromOtherModuleFix(files: File[]): boolean {
+    if (this.router.url.indexOf('/puzzle/') === -1) {
+      this.router.navigateByUrl('/puzzle');
+      setTimeout(() => this.getOnlyOneFile(files), 1000);
+      return true;
+    }
+    return false;
+  }
+
   public puzzleImageFileInput(filesEventTarget: EventTarget | null): void {
+    if (this.loadingFromOtherModuleFix(Array.from((filesEventTarget as any).files))) {
+      return;
+    }
+
     if (filesEventTarget !== null){
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       this.getOnlyOneFile(Array.from((filesEventTarget as any).files));

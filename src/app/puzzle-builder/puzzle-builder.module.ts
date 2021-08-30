@@ -42,6 +42,7 @@ import { GalleryComponent } from './pages/gallery/gallery.component';
     ReactiveFormsModule,
     FormsModule,
     FlexLayoutModule
-  ]
+  ],
+  exports: [InsertTemplateImageComponent]
 })
 export class PuzzleBuilderModule { }

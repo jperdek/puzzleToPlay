@@ -17,13 +17,14 @@ import { AppEffects } from './effects/app.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { InitialPageComponent } from './pages/initial-page/initial-page.component';
 import { SmallMainMenuComponent } from './components/small-main-menu/small-main-menu.component';
+import { PuzzleBuilderModule } from './puzzle-builder/puzzle-builder.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainNavigationComponent,
     InitialPageComponent,
-    SmallMainMenuComponent
+    SmallMainMenuComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +34,7 @@ import { SmallMainMenuComponent } from './components/small-main-menu/small-main-
     HttpClientModule,
     MaterialModule,
     FlexLayoutModule,
+    PuzzleBuilderModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([AppEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : []

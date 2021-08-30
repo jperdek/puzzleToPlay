@@ -1,0 +1,60 @@
+@import "../../styles/text-settings.scss";
+@import "../../styles/color-settings.scss";
+
+.whole-main-place {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-image: url("/assets/designImages/puzzlePanel.svg");
+  background-color: rgba(66, 66, 66);
+
+  .basic-info {
+    width: 100%;
+    height: 30vh;
+
+    .main-title {
+      @include main-heading;
+      font-size: 4rem;
+      color: $mild-green;
+      line-height: 4rem;
+      text-align: center;
+    }
+  }
+
+  .gallery-and-loader {
+    display: flex;
+    flex-direction: row;
+
+    .puzzle-info-part {
+      width: 30%;
+      height: 100%;
+
+      .info-part {
+        width: calc(100% - 40px);
+        height: calc(100% - 40px);
+        margin: 20px;
+        background-color: $white-light-color-transparency;
+      }
+    }
+
+    .gallery-part {
+      display: grid;
+      align-content: center;
+      align-items: center;
+      width: 35%;
+      height: 100%;
+
+      .whole-slide {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .image-loader {
+      width: 35%;
+      height: 100%;
+      background-image: url("/assets/designImages/puzzleEdge.svg");
+      background-color: rgba(66, 66, 66);
+    }
+  }
+}

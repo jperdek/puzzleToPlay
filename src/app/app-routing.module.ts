@@ -7,6 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: InitialPageComponent,
+    loadChildren: () => import('./puzzle-builder/puzzle-builder.module').then(m => m.PuzzleBuilderModule)
   },
   {
     path: 'puzzle',

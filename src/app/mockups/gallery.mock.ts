@@ -1,4 +1,5 @@
-import { TemplateCategory } from '../models/defaultTemplates';
+import { TemplateCategory, TemplateImage } from '../models/defaultTemplates';
+
 
 export let GalleryMock: TemplateCategory[] = [
     {
@@ -82,5 +83,33 @@ export let GalleryMock: TemplateCategory[] = [
                 src: 'assets/puzzleImages/metalAnimals/dragonfly.png'
             }
         ]
+    }
+];
+
+export let ImagesToPuzzleMock: TemplateImage[] = [
+    {
+        title: 'Crocodile',
+        quality: '903 x 508',
+        src: 'assets/puzzleImages/woodenAnimals/crocodile.png'
+    },
+    {
+        title: 'Swan',
+        quality: '903 x 508',
+        src: 'assets/puzzleImages/woodenAnimals/swan.png'
+    },
+    {
+        title: 'Lion',
+        quality: '903 x 508',
+        src: 'assets/puzzleImages/woodenAnimals/lion.png'
+    },
+    {
+        title: 'Mantis',
+        quality: '903 x 508',
+        src: 'assets/puzzleImages/woodenAnimals/mantis.png'
+    },
+    {
+        title: 'Animal trio',
+        quality: '903 x 508',
+        src: 'assets/puzzleImages/woodenAnimals/animals3.png'
     }
 ];
