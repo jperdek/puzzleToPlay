@@ -1,27 +1,57 @@
 # PuzzleToPlay
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.0.
+Generate and play puzzle in simulation of real puzzle game! You can move, rotate puzzles and zoom to certain point of puzzle board.
+We provides responsiveness which enables using several types of devices during play.
+In addition you can use hints to build puzzle faster. Application provides basic puzzle algorithm, but another puzzle generation strategies can be also implemented and tested using this environment.
+Angular puzzle game which provides environment for playing puzzles, testing and improving puzzle generation algorithms.
+
+
+## Environment provide:
+
+### Puzzle management: 
+- basic algorithm for puzzle generation
+- creation of puzzle / puzzles
+- rotation of puzzle / puzzles - user can rotate puzzles
+- shuffle of puzzles
+- initial rotation of puzzles - user will get rotated puzzles and rotation to previous state is neccessary
+- ngrx reactive manipulation - not used puzzled are in separated drawer
+- puzzles can be returned to drawer
+- hint for position of given puzzle can be provided
+- puzzles can be send to back or bring to front
+
+
+### Puzzle board management:
+- responsiveness during playing
+- possibility of zooming in and out from given area
+- highlighted area fits to given image - which we are buiding from puzzles
+- enough space to put puzzles on board - zoom can help, but canvas is as large as possible
+
+
+### Puzzle game management:
+- prepared gallery for playing
+- preview of image is included
+- advanced zooming settings
+- responisveness - suitability for smaller devices
+
+
+### Other features
+- special puzzle design
+- clean code compatible with ng lint - using ng lint as often as possible
+- configurable styles because of using scss
+- code separated in services, divided into directories for components and pages
+- loading of pictures - tested picture sized were up to 3MB (maybe larger are possible too) - depends on used technology
+
+
+## Improvements
+- better puzzle generator algorithms
+- UI for each puzzle generator algorithm with configurable parameters
+- saving of puzzle / game state
+
 
 ## Development server
 
+Use npm start in root directory and navigate to http://localhost:4200/ or http://localhost:4200/puzzle/
+
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
