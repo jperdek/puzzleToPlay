@@ -76,7 +76,9 @@ export class PuzzleGeneratorQuadroService {
         processId = processId + 1;
       });
 
-      // this.shufflePuzzlesService.shuffleArray(puzzles);
+      // comment this line to not shuffle puzzles
+      this.shufflePuzzlesService.shuffleArray(puzzles);
+
       this.insertPuzzlesToStore(puzzles);
     } else {
       console.log('Error: context is null or one of canvases not exists');
