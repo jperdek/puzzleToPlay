@@ -26,7 +26,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule  } from '@angular/material/bottom-sheet';
 
-import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { MatCarouselModule } from '@ngbmodule/material-carousel';
 
 
 const MaterialComponents = [

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './pages/app-component/app.component';
 import { HttpClientModule } from '@angular/common/http';

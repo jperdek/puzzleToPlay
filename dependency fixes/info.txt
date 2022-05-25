@@ -1,0 +1,8 @@
+
+Error: node_modules/@ngbmodule/material-carousel/lib/carousel.module.d.ts:2:10 - error TS2305: Module '"@angular/compiler/src/core"' has no exported member 'ModuleWithProviders'.
+
+2 import { ModuleWithProviders } from '@angular/compiler/src/core';
+
+Problem resolved at: https://github.com/gabrielbusarello/material2-carousel/issues/34
+
+Replace file carousel.module.d.ts with the file with the same name located at: node_modules/@ngbmodule/material-carousel/lib
