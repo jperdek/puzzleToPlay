@@ -11,16 +11,17 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~13.3.9",
-    "@angular/cdk": "^13.3.7",
-    "@angular/common": "~13.3.9",
-    "@angular/compiler": "~13.3.9",
-    "@angular/core": "~13.3.9",
-    "@angular/forms": "~13.3.9",
-    "@angular/platform-browser": "~13.3.9",
-    "@angular/platform-browser-dynamic": "~13.3.9",
-    "@angular/router": "~13.3.9",
+    "@angular/animations": "~14.0.0",
+    "@angular/cdk": "^14.0.1",
+    "@angular/common": "~14.0.0",
+    "@angular/compiler": "~14.0.0",
+    "@angular/core": "~14.0.0",
+    "@angular/forms": "~14.0.0",
+    "@angular/platform-browser": "~14.0.0",
+    "@angular/platform-browser-dynamic": "~14.0.0",
+    "@angular/router": "~14.0.0",
     "@ngbmodule/material-carousel": "^0.7.2",
+<<<<<<< HEAD
     "@ngrx/effects": "^12.4.0",
     "@ngrx/entity": "^12.4.0",
     "@ngrx/store": "^12.5.1",
@@ -28,6 +29,12 @@
     "aspect.js-angular": "^0.0.9",
     "aspectjs": "^2.0.4",
     "aspects-js": "^1.0.2",
+=======
+    "@ngrx/effects": "^13.2.0",
+    "@ngrx/entity": "^13.2.0",
+    "@ngrx/store": "^13.2.0",
+    "@ngrx/store-devtools": "^13.2.0",
+>>>>>>> master
     "fabric": "^4.5.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.6.0",
@@ -36,11 +43,17 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~13.3.6",
+    "@angular-devkit/build-angular": "~14.0.0",
     "@angular/cli": "~13.3.6",
+<<<<<<< HEAD
     "@angular/compiler-cli": "~13.3.9",
     "@angular/flex-layout": "^12.0.0-beta.34",
     "@angular/material": "^13.3.7",
+=======
+    "@angular/compiler-cli": "~14.0.0",
+    "@angular/flex-layout": "^13.0.0-beta.38",
+    "@angular/material": "^12.2.13",
+>>>>>>> master
     "@types/fabric": "^4.5.2",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.20.52",
