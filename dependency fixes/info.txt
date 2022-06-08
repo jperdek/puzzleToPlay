@@ -6,3 +6,16 @@ Error: node_modules/@ngbmodule/material-carousel/lib/carousel.module.d.ts:2:10 -
 Problem resolved at: https://github.com/gabrielbusarello/material2-carousel/issues/34
 
 Replace file carousel.module.d.ts with the file with the same name located at: node_modules/@ngbmodule/material-carousel/lib
+
+
+NOTE: This error can appear after installation of modules - needs changed script
+	-during compilation can appear errors like: error TS2300: Duplicate identifier 'ɵngcc6':
+
+add to tsconfig.json:
+
+{
+  "compilerOptions": {
+    "skipLibCheck": true /* Skip type checking all .d.ts files. - MAINLY THIS HELPS*/
+  },
+  "exclude": ["node_modules"],
+} 

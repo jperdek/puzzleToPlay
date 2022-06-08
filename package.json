@@ -27,6 +27,7 @@
     "@ngrx/store-devtools": "^13.2.0",
     "fabric": "^4.5.1",
     "rxjs": "~6.6.0",
+    "to-aop": "^0.5.4",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
   },
@@ -34,7 +35,7 @@
     "@angular-devkit/build-angular": "~14.0.0",
     "@angular/cli": "~13.3.6",
     "@angular/compiler-cli": "~14.0.0",
-    "@angular/flex-layout": "^12.0.0-beta.34",
+    "@angular/flex-layout": "^13.0.0-beta.38",
     "@angular/material": "^12.2.13",
     "@types/fabric": "^4.5.2",
     "@types/jasmine": "~3.6.0",
