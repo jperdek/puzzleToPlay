@@ -1,0 +1,68 @@
+
+ASPECTJS ANGULAR - NOT WORK ANYMORE https://github.com/angular/angular/issues/26714
+https://www.npmjs.com/package/aspect.js-angular
+
+npm i aspect.js-angular --force --save
+ used with https://github.com/mgechev/aspect.js
+
+
+
+
+
+
+
+ASPECTJS
+https://www.npmjs.com/package/aspectjs
+
+npm i aspectjs  --force --save
+
+
+TO USE REQUIRE:
+npm i --save-dev @types/node --force
+
+ts.config.app.json:
+"compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": ["node"]
+  },
+
+
+
+CREATING D.TS FILE:
+npm install -g typescript
+tsc --declaration --allowJs index.js --outDir "folderName"
+
+following then can be used:
+import { before } from 'aspectjs';
+
+
+ASPECTS-JS - more functionality
+https://www.npmjs.com/package/aspects-js
+https://github.com/wm123450405/aspects-js
+npm install --save aspects-js
+
+
+ASPECT-JS
+https://www.npmjs.com/package/aspect-js
+
+
+JS ASPECT
+https://www.npmjs.com/package/js-aspect
+https://github.com/antivanov/jsAspect
+
+
+CORE ASPECTJS
+https://www.npmjs.com/package/@aspectjs/core
+
+TS ASPECT
+https://www.npmjs.com/package/ts-aspect
+https://github.com/engelmi/ts-aspect
+
+TO-AOP
+https://www.npmjs.com/package/to-aop
+https://github.com/mjancarik/to-aop
+
+https://www.meziantou.net/aspect-oriented-programming-in-typescript.htm
+https://www.npmjs.com/package/@northscaler/aspectify
+
+https://www.npmjs.com/package/aspects

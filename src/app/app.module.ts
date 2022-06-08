@@ -18,6 +18,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { InitialPageComponent } from './pages/initial-page/initial-page.component';
 import { SmallMainMenuComponent } from './components/small-main-menu/small-main-menu.component';
 import { PuzzleBuilderModule } from './puzzle-builder/puzzle-builder.module';
+import { AspectTestComponent } from './aspect-test/aspect-test.component';
+import { AspectTestNodeComponent } from './aspect-test-node/aspect-test-node.component';
+import { AspectTestNode2Component } from './aspect-test-node2/aspect-test-node2.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,9 @@ import { PuzzleBuilderModule } from './puzzle-builder/puzzle-builder.module';
     MainNavigationComponent,
     InitialPageComponent,
     SmallMainMenuComponent,
+    AspectTestComponent,
+    AspectTestNodeComponent,
+    AspectTestNode2Component
   ],
   imports: [
     CommonModule,
