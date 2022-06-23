@@ -21,6 +21,7 @@ import { PuzzleBuilderModule } from './puzzle-builder/puzzle-builder.module';
 import { AspectTestComponent } from './aspect-test/aspect-test.component';
 import { AspectTestNodeComponent } from './aspect-test-node/aspect-test-node.component';
 import { AspectTestNode2Component } from './aspect-test-node2/aspect-test-node2.component';
+import { ToAopTestComponent } from './toAopTestFiles/to-aop-test/to-aop-test.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AspectTestNode2Component } from './aspect-test-node2/aspect-test-node2.
     SmallMainMenuComponent,
     AspectTestComponent,
     AspectTestNodeComponent,
-    AspectTestNode2Component
+    AspectTestNode2Component,
+    ToAopTestComponent
   ],
   imports: [
     CommonModule,

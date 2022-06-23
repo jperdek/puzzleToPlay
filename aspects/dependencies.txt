@@ -66,3 +66,13 @@ https://www.meziantou.net/aspect-oriented-programming-in-typescript.htm
 https://www.npmjs.com/package/@northscaler/aspectify
 
 https://www.npmjs.com/package/aspects
+Getters and setters:
+https://stackoverflow.com/questions/54682011/how-to-create-getter-setter-in-angular
+
+
+KAOP-TS
+https://github.com/k1r0s/kaop-ts
+https://jsbin.com/bogecojuvi/edit?js,console
+
+For angular:
+https://github.com/k1r0s/angular2-srp-showcase

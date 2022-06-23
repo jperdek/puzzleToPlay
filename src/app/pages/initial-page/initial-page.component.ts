@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AspectTestComponent } from 'src/app/aspect-test/aspect-test.component';
@@ -12,19 +12,26 @@ import { AspectTestNodeComponent } from 'src/app/aspect-test-node/aspect-test-no
 import { AspectjsManagerService } from 'src/app/aspectjs-manager.service';
 import { AspectTestNode2Component } from 'src/app/aspect-test-node2/aspect-test-node2.component';
 import { before } from 'aspectjs';
+import { ToAopTestService } from 'src/app/toAopTestFiles/to-aop-test.service';
+
 
 @Component({
   selector: 'app-initial-page',
   templateUrl: './initial-page.component.html',
   styleUrls: ['./initial-page.component.scss']
 })
-export class InitialPageComponent {
+export class InitialPageComponent implements OnInit {
 
   constructor(
     private puzzleManagerService: PuzzleManagerService,
+    private toAopTestService: ToAopTestService,
     private router: Router
     // private bar: Bar
     ) {}
+
+  ngOnInit(): void {
+    this.toAopTestService.initialize();
+  }
 
   public getSlides(): Observable<TemplateImage[]> {
     return of(ImagesToPuzzleMock);
@@ -54,6 +61,17 @@ export class InitialPageComponent {
     /// case 4 - static methods
     before(AspectTestNode2Component, 'my').add(this, 'myTestMethod');
     AspectTestNode2Component.my();
+
+    this.startToAopTest();
+  }
+
+  public removeAop(): void {
+    console.log('Removing AOP!');
+    this.toAopTestService.removeAop();
+  }
+
+  startToAopTest(): void {
+    this.toAopTestService.testStaticMethodHook();
   }
 
   myTestMethod(): void {
