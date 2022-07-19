@@ -5,6 +5,34 @@ import { ToAopManagerGettersSettersService } from './to-aop-manager-getters-sett
 import { ToAopManagerInjectService } from './to-aop-manager-inject.service';
 import { ToAopManagerService } from './to-aop-manager.service';
 
+
+class AAA {
+  prototype: any;
+  constructor() {
+    console.log("Creating AAAA");
+    return this.applyToMe();
+  }
+  applyToMe() {
+    console.log("Applying!");
+    return this;
+  }
+  a(): any {
+    console.log("Previous A!");
+  }
+}
+
+
+class BBB {
+  constructor() {
+    console.log("Creating BBBB");
+    //this.a()
+  }
+  a(): any {
+    console.log("THIS IS B");
+    return -1;
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,16 +69,21 @@ export class ToAopTestService {
 
       // DYNAMIC OBJECTS
       // NOT WORKS FOR CONSTRUCTOR
-      this.nowBeforeConstructorHook = createHook(hookName.beforeMethod, 'constructor', (args: any) => {
+      console.log(AAA.prototype);
+      this.nowBeforeConstructorHook = createHook(hookName.aroundMethod, 'applyToMe',  (args: any) => {
         console.log('AOP: Before To AOP constructor hook!!!');
+        return new BBB();
       });
-      aop(ToAopManagerInjectService, this.nowBeforeConstructorHook, { constructor: true });
+      aop(AAA, this.nowBeforeConstructorHook, { constructor: true });
+      console.log("CALLING CONSTRUCTTTTTTOOOR!!!!!!");
+      var hhh = new AAA();
+      hhh.a();
 
       this.nowBeforeDynamicHook = createHook(hookName.beforeMethod, 'myMethodDynamic', (args: any) => {
         console.log('AOP: Before To AOP dynamic method hook!!!');
       });
 
-    
+
       this.nowBeforeNamedDynamicHook = createHook(hookName.beforeMethod, /^(myNamed.*)$/,
       (target: any) => {
         console.log('AOP: Before dynamic method executed!');
@@ -92,7 +125,7 @@ export class ToAopTestService {
     aop(b, this.nowBeforeGetterHook);
     aop(b, this.nowBeforeSetterHook);
     b.myVariable = 5;
-    b.myVariable1(14);
+    //b.myVariable1(14);
     console.log('Printing my variable: ' + b.myVariable.toString());
   }
 

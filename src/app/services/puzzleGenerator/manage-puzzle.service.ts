@@ -5,6 +5,7 @@ import { ExtendedPuzzle } from 'src/app/models/extendedPuzzle';
 import { PuzzleAppState } from 'src/app/store';
 import { Puzzle } from 'src/app/store/puzzles/puzzles';
 import { addPuzzle, returnPuzzle, returnPuzzles } from 'src/app/store/puzzles/puzzles.actions';
+import { PuzzleController } from '../puzzleControllers/puzzle-controller-interface';
 import { PuzzleControllerManagerService } from '../puzzleControllers/puzzle-controller-manager.service';
 import { DisableControlsService } from '../utils/disable-controls.service';
 import { SetPuzzleAreaOnBoardService } from './set-puzzle-area-on-board.service';
@@ -21,7 +22,7 @@ export class ManagePuzzleService {
 
   constructor(
     private store: Store<PuzzleAppState>,
-    private puzzleControllerManagerService: PuzzleControllerManagerService,
+    private puzzleControllerManagerService: PuzzleControllerManagerService, //must be instance of given type
     private disableControlsService: DisableControlsService) { }
 
   public setPuzzleAreaOnBoardService(setPuzzleAreaOnBoardService: SetPuzzleAreaOnBoardService): void {

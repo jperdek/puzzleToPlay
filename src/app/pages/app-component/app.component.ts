@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TreeManagerService } from 'src/app/puzzle-builder/management-services/main/tree-manager.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'puzzleToPlay';
+  constructor(private treeManagerService: TreeManagerService) { }
+
 }

@@ -9,11 +9,11 @@ export class ToAopManagerGettersSettersService {
 
   constructor() { }
 
-  set myVariable1(myVariable: number): void {
+  set myVariable1(myVariable: number) {
     this.myVariable = myVariable;
   }
 
-  get myVariable(): number {
+  get myVariable1(): number {
     return this.myVariable;
   }
 }
