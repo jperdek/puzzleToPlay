@@ -56,6 +56,13 @@ Use npm start in root directory and navigate to http://localhost:4200/ or http:/
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 
+## Run IT
+
+- npm install  
+- copy file "dependency fixes/carousel.module.d.ts" -> node_modules/@ngbmodule/material-carousel/lib/carousel.module.d.ts  
+- 
+
+
 ## Keywords
 
 puzzle, puzzles, puzzle generator, algorithm, game, responsive game, interactive game, fabric, canvas game

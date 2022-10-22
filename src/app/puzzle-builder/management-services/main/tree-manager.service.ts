@@ -8,13 +8,13 @@ import { featureConfig } from './feature-config';
 })
 export class TreeManagerService {
 
-  private featureConfiguration = null;
+  //private featureConfiguration = null;
   private functionalityMapping = {
     "deleteItem": this.menuManagerService.initialize
   }
 
   constructor(
-    private featureConfigLoader: FeatureConfigLoaderService,
+    //private featureConfigLoader: FeatureConfigLoaderService,
     private menuManagerService: MenuManagerService) {
     //this.featureConfiguration = featureConfigLoader.getFeatureConfig();
 

@@ -33,7 +33,7 @@ export class FeatureConfigLoaderService {
         //console.log("Feature " + keyName + " has functionalityMapping!");
         if (featureConfig["include"]) {
           console.log("Applying functionalityMapping for Feature " + keyName + "!");
-          functionalityMapping[keyName](featureConfig);
+          //functionalityMapping[keyName](featureConfig);
         }
       } else {
         //console.log("Feature " + keyName + " does not have functionalityMapping!");

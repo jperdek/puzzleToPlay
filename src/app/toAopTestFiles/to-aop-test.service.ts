@@ -33,6 +33,41 @@ class BBB {
   }
 }
 
+class MovedC {
+  static callCFunc(): Function {
+    return new C().sampleMethodDecorator(true);
+  }
+}
+
+
+class C {
+  sampleMethodDecorator(value: boolean): Function {
+    console.log("Dercorator function f-----------------------------------------------!!!!");
+      console.log(value);
+    return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+      console.log("<-------------------------- INSIDE");
+      console.log(target);
+      console.log(propertyKey);
+      console.log(descriptor);
+      console.log("<-------------------------> ENDS");
+    };
+  }
+
+  sampleMethodDecorator2(value: boolean): Function {
+    console.log("Dercorator function 2");
+      console.log(value);
+    return function(target: ToAopTestService, propertyKey: string, descriptor: PropertyDescriptor) {
+      console.log("<-------------------------- INSIDE");
+      descriptor.value = function() { console.log("Calling modified f!!!!") }
+      console.log(target.f);
+      console.log(propertyKey);
+      console.log(descriptor);
+      console.log("<-------------------------> ENDS");
+    };
+  }
+}
+
+@MovedC.callCFunc()
 @Injectable({
   providedIn: 'root'
 })
@@ -52,8 +87,25 @@ export class ToAopTestService {
 
   constructor(private toAopManagerInject: ToAopManagerInjectService) { }
 
+  @new C().sampleMethodDecorator2(true)
+  f() {
+    console.log("Calling f!!!!")
+  }
+
   // should be executed only once
   public initialize(): void {
+      (this as any).newRuntimeFunction = function() {
+          console.log("I am created");
+      };
+      console.log("Here it goes - function at runtime!");
+      (this as any).newRuntimeFunction();
+      console.log("Here it ends - function at runtime!");
+
+      console.log("Here it goes - decorator function!");
+      this.f(); //not fully overwritten!!!
+      console.log("Here it ends - decorator function!");
+
+
       console.log('Initializing');
 
       // STATIC OBJECTS
@@ -135,3 +187,4 @@ export class ToAopTestService {
   }
 
 }
+
